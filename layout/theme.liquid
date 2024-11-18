@@ -372,39 +372,61 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RM38VCE825"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag() {
+        dataLayer.push(arguments);
+      }
       gtag('js', new Date());
       gtag('config', 'G-RM38VCE825');
     </script>
     <!-- Microsoft clarity -->
     <script type="text/javascript">
-      (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window, document, "clarity", "script", "nr5fuewnh8");
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = 'https://www.clarity.ms/tag/' + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, 'clarity', 'script', 'nr5fuewnh8');
     </script>
     <!-- Google Tag Manager -->
     <script>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-MPS9F7XS');
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-MPS9F7XS');
     </script>
     <!-- End Google Tag Manager -->
     <!-- Meta Pixel Code -->
     <script>
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '521968940353790');
-            fbq('track', 'PageView');
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '521968940353790');
+      fbq('track', 'PageView');
       //       fbq('track', 'Purchase', {
       //   content_ids: ['123'], // 'REQUIRED': array of product IDs
       //   value: 1234.99, // REQUIRED, up to 2 decimals optional
@@ -513,228 +535,231 @@
 
     <!-- Button Click Tracking Script -->
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-          document.querySelectorAll('.button').forEach(function(button) {
-              button.addEventListener('click', function() {
-                  fbq('track', 'ButtonClick', {
-                      buttonText: this.textContent || this.innerText
-                  });
-              });
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.button').forEach(function (button) {
+          button.addEventListener('click', function () {
+            fbq('track', 'ButtonClick', {
+              buttonText: this.textContent || this.innerText,
+            });
           });
+        });
       });
     </script>
     <script>
       //   const wishlistKey = "wishlist";
 
-// function getWishlist() {
-//   return JSON.parse(localStorage.getItem(wishlistKey)) || [];
-// }
+      // function getWishlist() {
+      //   return JSON.parse(localStorage.getItem(wishlistKey)) || [];
+      // }
 
-// function saveWishlist(wishlist) {
-//   localStorage.setItem(wishlistKey, JSON.stringify(wishlist));
-// }
+      // function saveWishlist(wishlist) {
+      //   localStorage.setItem(wishlistKey, JSON.stringify(wishlist));
+      // }
 
-// function toggleWishlist() {
-//   const wishlistData = getWishlist();
-//   const isAlreadyInWishlist = wishlistData.some(
-//     (item) => item.productTitle === pdpData.productTitle
-//   );
+      // function toggleWishlist() {
+      //   const wishlistData = getWishlist();
+      //   const isAlreadyInWishlist = wishlistData.some(
+      //     (item) => item.productTitle === pdpData.productTitle
+      //   );
 
-//   const updatedWishlist = isAlreadyInWishlist
-//     ? wishlistData.filter((item) => item.productTitle !== pdpData.productTitle)
-//     : [...wishlistData, pdpData];
+      //   const updatedWishlist = isAlreadyInWishlist
+      //     ? wishlistData.filter((item) => item.productTitle !== pdpData.productTitle)
+      //     : [...wishlistData, pdpData];
 
-//   saveWishlist(updatedWishlist);
-//   updateWishlistButton(isAlreadyInWishlist ? "remove" : "add");
-//   displayWishlist();
-// }
+      //   saveWishlist(updatedWishlist);
+      //   updateWishlistButton(isAlreadyInWishlist ? "remove" : "add");
+      //   displayWishlist();
+      // }
 
-// function updateWishlistButton(action) {
-//   const wishlistButton = document.querySelector(".wishlist_button");
-//   if (!wishlistButton) return;
+      // function updateWishlistButton(action) {
+      //   const wishlistButton = document.querySelector(".wishlist_button");
+      //   if (!wishlistButton) return;
 
-//   const heartIcon =
-//     action === "add"
-//       ? `<svg class="heart-filled" width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.3 5.71002C18.841 5.24601 18.2943 4.87797 17.6917 4.62731C17.0891 4.37666 16.4426 4.2484 15.79 4.25002C15.1373 4.2484 14.4909 4.37666 13.8883 4.62731C13.2857 4.87797 12.739 5.24601 12.28 5.71002L12 6.00002L11.72 5.72001C10.7917 4.79182 9.53273 4.27037 8.22 4.27037C6.90726 4.27037 5.64829 4.79182 4.72 5.72001C3.80386 6.65466 3.29071 7.91125 3.29071 9.22002C3.29071 10.5288 3.80386 11.7854 4.72 12.72L11.49 19.51C11.6306 19.6505 11.8212 19.7294 12.02 19.7294C12.2187 19.7294 12.4094 19.6505 12.55 19.51L19.32 12.72C20.2365 11.7823 20.7479 10.5221 20.7442 9.21092C20.7405 7.89973 20.2218 6.64248 19.3 5.71002Z" fill="#000000"/></svg>`
-//       : `<svg class="heart-outline" width="35px" height="35px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="0" fill="none" width="24" height="24"/><g><path d="M16.5 4.5c2.206 0 4 1.794 4 4 0 4.67-5.543 8.94-8.5 11.023C9.043 17.44 3.5 13.17 3.5 8.5c0-2.206 1.794-4 4-4 1.298 0 2.522.638 3.273 1.706L12 7.953l1.227-1.746c.75-1.07 1.975-1.707 3.273-1.707m0-1.5c-1.862 0-3.505.928-4.5 2.344C11.005 3.928 9.362 3 7.5 3 4.462 3 2 5.462 2 8.5c0 5.72 6.5 10.438 10 12.85 3.5-2.412 10-7.13 10-12.85C22 5.462 19.538 3 16.5 3z"/></g></svg>`;
+      //   const heartIcon =
+      //     action === "add"
+      //       ? `<svg class="heart-filled" width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.3 5.71002C18.841 5.24601 18.2943 4.87797 17.6917 4.62731C17.0891 4.37666 16.4426 4.2484 15.79 4.25002C15.1373 4.2484 14.4909 4.37666 13.8883 4.62731C13.2857 4.87797 12.739 5.24601 12.28 5.71002L12 6.00002L11.72 5.72001C10.7917 4.79182 9.53273 4.27037 8.22 4.27037C6.90726 4.27037 5.64829 4.79182 4.72 5.72001C3.80386 6.65466 3.29071 7.91125 3.29071 9.22002C3.29071 10.5288 3.80386 11.7854 4.72 12.72L11.49 19.51C11.6306 19.6505 11.8212 19.7294 12.02 19.7294C12.2187 19.7294 12.4094 19.6505 12.55 19.51L19.32 12.72C20.2365 11.7823 20.7479 10.5221 20.7442 9.21092C20.7405 7.89973 20.2218 6.64248 19.3 5.71002Z" fill="#000000"/></svg>`
+      //       : `<svg class="heart-outline" width="35px" height="35px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="0" fill="none" width="24" height="24"/><g><path d="M16.5 4.5c2.206 0 4 1.794 4 4 0 4.67-5.543 8.94-8.5 11.023C9.043 17.44 3.5 13.17 3.5 8.5c0-2.206 1.794-4 4-4 1.298 0 2.522.638 3.273 1.706L12 7.953l1.227-1.746c.75-1.07 1.975-1.707 3.273-1.707m0-1.5c-1.862 0-3.505.928-4.5 2.344C11.005 3.928 9.362 3 7.5 3 4.462 3 2 5.462 2 8.5c0 5.72 6.5 10.438 10 12.85 3.5-2.412 10-7.13 10-12.85C22 5.462 19.538 3 16.5 3z"/></g></svg>`;
 
-//   wishlistButton.innerHTML = heartIcon;
-// }
+      //   wishlistButton.innerHTML = heartIcon;
+      // }
 
-// function displayWishlist() {
-//   const wishlistData = getWishlist();
-//   const wishListCount = document.querySelector(".button-floating .wishCount");
-//   const wishlistBlock = document.querySelector(".js-wishlistBlock");
+      // function displayWishlist() {
+      //   const wishlistData = getWishlist();
+      //   const wishListCount = document.querySelector(".button-floating .wishCount");
+      //   const wishlistBlock = document.querySelector(".js-wishlistBlock");
 
-//   if (!wishListCount) return;
+      //   if (!wishListCount) return;
 
-//   wishListCount.classList.toggle("wishListCount", wishlistData.length > 0);
-//   wishListCount.textContent = wishlistData.length || "";
+      //   wishListCount.classList.toggle("wishListCount", wishlistData.length > 0);
+      //   wishListCount.textContent = wishlistData.length || "";
 
-//   const wishlistHtml = wishlistData.length
-//     ? wishlistData.map(createWishlistItem).join("")
-//     : "<p>Your wishlist is empty.</p>";
+      //   const wishlistHtml = wishlistData.length
+      //     ? wishlistData.map(createWishlistItem).join("")
+      //     : "<p>Your wishlist is empty.</p>";
 
-//   if (wishlistBlock) {
-//     wishlistBlock.innerHTML = wishlistHtml;
-//   }
-// }
+      //   if (wishlistBlock) {
+      //     wishlistBlock.innerHTML = wishlistHtml;
+      //   }
+      // }
 
-// function createWishlistItem(item) {
-//   return `
-// <div class="wishlist-product__list">
-// <div class="c-product">
-// <a href="${item.productUrl}">
-// <img class="pdpimage" src="${item.productImg}" alt="${item.productTitle}">
-// </a>
-// <button class="removebutton" onclick="removeFromWishlist('${item.productTitle}')">
-// <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 122.88 107.21" width="20px" height="20px" fill="#f73838"><title>Remove from wishlist</title><path d="M73.13,93.77,59.58,107.21,44,92.19c-2.43-2.35-5.25-4.92-8.18-7.59C19.93,70.14.79,52.69,0,31.09l0-1.65A28.51,28.51,0,0,1,9,8.54,31.68,31.68,0,0,1,29.57.31l1.71,0c13.72.18,20,6.2,28.18,14.24C66.21,7.38,71.81,1.52,83.21.21a33.07,33.07,0,0,1,18.62,3.37,34.41,34.41,0,0,1,12.24,10.25,31,31,0,0,1,6,14.86A30.55,30.55,0,0,1,116.82,46c-.41.8-.88,1.65-1.39,2.52l-.45.74A30.65,30.65,0,0,1,73.13,93.77Zm30.73-27.85a3.87,3.87,0,0,1,1.48.29,3.92,3.92,0,0,1,1.26.84,4,4,0,0,1,.84,1.25l0,.07a3.78,3.78,0,0,1,.28,1.35v.15a3.86,3.86,0,0,1-.29,1.41,4.15,4.15,0,0,1-.84,1.26,3.7,3.7,0,0,1-1.25.83l-.07,0a4,4,0,0,1-1.39.28H80.6a3.87,3.87,0,0,1-1.48-.3l-.06,0a3.58,3.58,0,0,1-1.2-.81A3.87,3.87,0,0,1,77,71.3l0-.07a4,4,0,0,1-.28-1.4v0A4,4,0,0,1,77,68.33a3.86,3.86,0,0,1,.84-1.27,4,4,0,0,1,1.25-.83,3.71,3.71,0,0,1,1.47-.3Zm6.19-21.06c.34-.58.67-1.17,1-1.76a24.13,24.13,0,0,0,2.56-13.67,24.39,24.39,0,0,0-4.72-11.73,27.78,27.78,0,0,0-9.92-8.31A26.62,26.62,0,0,0,84,6.68c-9.13,1-14,6.2-19.9,12.47l-4.43,4.64L55.2,19.45c-7.27-7.14-12.74-12.52-24-12.67l-1.4,0a25.21,25.21,0,0,0-16.36,6.5A22.12,22.12,0,0,0,6.49,29.52l0,1.34c.67,18.85,18.72,35.3,33.67,48.93,2.89,2.63,5.67,5.16,8.32,7.72l11,10.61,9-8.91a30.66,30.66,0,0,1,41.55-44.35Zm-.76,7.87a24.14,24.14,0,1,0,7.07,17.07,24.06,24.06,0,0,0-7.07-17.07Z"></path></svg>
-// </button>
-// <h3 class="c-product__title card__heading h5">
-// <a class="full-unstyled-link" href="${item.productUrl}">${item.productTitle}</a>
-// </h3>
-// <p>${item.productPrice}</p>
-// </div>
-// </div>`;
-// }
+      // function createWishlistItem(item) {
+      //   return `
+      // <div class="wishlist-product__list">
+      // <div class="c-product">
+      // <a href="${item.productUrl}">
+      // <img class="pdpimage" src="${item.productImg}" alt="${item.productTitle}">
+      // </a>
+      // <button class="removebutton" onclick="removeFromWishlist('${item.productTitle}')">
+      // <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 122.88 107.21" width="20px" height="20px" fill="#f73838"><title>Remove from wishlist</title><path d="M73.13,93.77,59.58,107.21,44,92.19c-2.43-2.35-5.25-4.92-8.18-7.59C19.93,70.14.79,52.69,0,31.09l0-1.65A28.51,28.51,0,0,1,9,8.54,31.68,31.68,0,0,1,29.57.31l1.71,0c13.72.18,20,6.2,28.18,14.24C66.21,7.38,71.81,1.52,83.21.21a33.07,33.07,0,0,1,18.62,3.37,34.41,34.41,0,0,1,12.24,10.25,31,31,0,0,1,6,14.86A30.55,30.55,0,0,1,116.82,46c-.41.8-.88,1.65-1.39,2.52l-.45.74A30.65,30.65,0,0,1,73.13,93.77Zm30.73-27.85a3.87,3.87,0,0,1,1.48.29,3.92,3.92,0,0,1,1.26.84,4,4,0,0,1,.84,1.25l0,.07a3.78,3.78,0,0,1,.28,1.35v.15a3.86,3.86,0,0,1-.29,1.41,4.15,4.15,0,0,1-.84,1.26,3.7,3.7,0,0,1-1.25.83l-.07,0a4,4,0,0,1-1.39.28H80.6a3.87,3.87,0,0,1-1.48-.3l-.06,0a3.58,3.58,0,0,1-1.2-.81A3.87,3.87,0,0,1,77,71.3l0-.07a4,4,0,0,1-.28-1.4v0A4,4,0,0,1,77,68.33a3.86,3.86,0,0,1,.84-1.27,4,4,0,0,1,1.25-.83,3.71,3.71,0,0,1,1.47-.3Zm6.19-21.06c.34-.58.67-1.17,1-1.76a24.13,24.13,0,0,0,2.56-13.67,24.39,24.39,0,0,0-4.72-11.73,27.78,27.78,0,0,0-9.92-8.31A26.62,26.62,0,0,0,84,6.68c-9.13,1-14,6.2-19.9,12.47l-4.43,4.64L55.2,19.45c-7.27-7.14-12.74-12.52-24-12.67l-1.4,0a25.21,25.21,0,0,0-16.36,6.5A22.12,22.12,0,0,0,6.49,29.52l0,1.34c.67,18.85,18.72,35.3,33.67,48.93,2.89,2.63,5.67,5.16,8.32,7.72l11,10.61,9-8.91a30.66,30.66,0,0,1,41.55-44.35Zm-.76,7.87a24.14,24.14,0,1,0,7.07,17.07,24.06,24.06,0,0,0-7.07-17.07Z"></path></svg>
+      // </button>
+      // <h3 class="c-product__title card__heading h5">
+      // <a class="full-unstyled-link" href="${item.productUrl}">${item.productTitle}</a>
+      // </h3>
+      // <p>${item.productPrice}</p>
+      // </div>
+      // </div>`;
+      // }
 
-// function removeFromWishlist(productTitle) {
-//   const wishlistData = getWishlist();
-//   const updatedWishlist = wishlistData.filter(
-//     (item) => item.productTitle !== productTitle
-//   );
-//   saveWishlist(updatedWishlist);
-//   displayWishlist();
-//   updateWishlistButton("remove");
-// }
+      // function removeFromWishlist(productTitle) {
+      //   const wishlistData = getWishlist();
+      //   const updatedWishlist = wishlistData.filter(
+      //     (item) => item.productTitle !== productTitle
+      //   );
+      //   saveWishlist(updatedWishlist);
+      //   displayWishlist();
+      //   updateWishlistButton("remove");
+      // }
 
-// document.addEventListener("DOMContentLoaded", function () {
-//   const wishlistData = getWishlist();
-//   const wishlistButton = document.querySelector(".wishlist_button");
-//   if (wishlistButton) {
-//     const isAlreadyInWishlist = wishlistData.some(
-//       (item) => item.productTitle === pdpData.productTitle
-//     );
-//     updateWishlistButton(isAlreadyInWishlist ? "add" : "remove");
-//     wishlistButton.addEventListener("click", () => {
-//       wishlistButton.innerHTML = `<div class="loading__spinner" style="width: 2.5rem"><svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg></div>`;
-//       wishlistButton.disabled = true;
-//       setTimeout(() => {
-//         wishlistButton.innerHTML = "";
-//         toggleWishlist();
-//         wishlistButton.disabled = false;
-//       }, 1000);
-//     });
-//   }
+      // document.addEventListener("DOMContentLoaded", function () {
+      //   const wishlistData = getWishlist();
+      //   const wishlistButton = document.querySelector(".wishlist_button");
+      //   if (wishlistButton) {
+      //     const isAlreadyInWishlist = wishlistData.some(
+      //       (item) => item.productTitle === pdpData.productTitle
+      //     );
+      //     updateWishlistButton(isAlreadyInWishlist ? "add" : "remove");
+      //     wishlistButton.addEventListener("click", () => {
+      //       wishlistButton.innerHTML = `<div class="loading__spinner" style="width: 2.5rem"><svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg></div>`;
+      //       wishlistButton.disabled = true;
+      //       setTimeout(() => {
+      //         wishlistButton.innerHTML = "";
+      //         toggleWishlist();
+      //         wishlistButton.disabled = false;
+      //       }, 1000);
+      //     });
+      //   }
 
-//   displayWishlist();
-// });
+      //   displayWishlist();
+      // });
     </script>
     <script>
       // Utility to fetch wishlist from localStorage
-function getWishlist() {
-  return JSON.parse(localStorage.getItem("wishlist")) || [];
-}
-function getButton() {
-  return JSON.parse(localStorage.getItem("buttonData")) || [];
-}
-function getProduct() {
-return JSON.parse(localStorage.getItem("productData")) || [];
-}
-// Utility to save wishlist, button and prodcut data to localStorage
-function saveWishlist(wishlist) {
-  localStorage.setItem("wishlist", JSON.stringify(wishlist));
-}
-function saveButton(buttonData) {
-  localStorage.setItem("buttonData", JSON.stringify(buttonData));
-}     
-function saveProduct(productData) {
-  localStorage.setItem("productData", JSON.stringify(productData));
-}
+      function getWishlist() {
+        return JSON.parse(localStorage.getItem('wishlist')) || [];
+      }
+      function getButton() {
+        return JSON.parse(localStorage.getItem('buttonData')) || [];
+      }
+      function getProduct() {
+        return JSON.parse(localStorage.getItem('productData')) || [];
+      }
+      // Utility to save wishlist, button and prodcut data to localStorage
+      function saveWishlist(wishlist) {
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      }
+      function saveButton(buttonData) {
+        localStorage.setItem('buttonData', JSON.stringify(buttonData));
+      }
+      function saveProduct(productData) {
+        localStorage.setItem('productData', JSON.stringify(productData));
+      }
 
-// Toggle Wishlist for a specific product
-function toggleWishlist(productData, wishlistButton) {
-  const wishlistData = getWishlist();
-  const isAlreadyInWishlist = wishlistData.some(
-    (item) => item.productTitle === productData.productTitle
-  );
-  const updatedWishlist = isAlreadyInWishlist
-    ? wishlistData.filter((item) => item.productTitle !== productData.productTitle)
-    : [...wishlistData, productData];
-  saveWishlist(updatedWishlist);
-  updateWishlistButton(wishlistButton, isAlreadyInWishlist ? "add" : "remove");
-  displayWishlist();
+      // Toggle Wishlist for a specific product
+      function toggleWishlist(productData, wishlistButton) {
+        const wishlistData = getWishlist();
+        const isAlreadyInWishlist = wishlistData.some((item) => item.productTitle === productData.productTitle);
+        const updatedWishlist = isAlreadyInWishlist
+          ? wishlistData.filter((item) => item.productTitle !== productData.productTitle)
+          : [...wishlistData, productData];
+        saveWishlist(updatedWishlist);
+        updateWishlistButton(wishlistButton, isAlreadyInWishlist ? 'add' : 'remove');
+        displayWishlist();
 
-  const buttonData = getButton();
-  const myproductData = getProduct();
-  const updatedButton = isAlreadyInWishlist ? buttonData.filter((item) => item.productTitle !== productData.productTitle) : [...buttonData, productData];
-  const updatedProduct = isAlreadyInWishlist ? myproductData.filter((item) => item.productTitle !== productData.productTitle) : [...myproductData, productData];
-  saveButton(updatedButton);
-  saveProduct(updatedProduct);
-}
+        const buttonData = getButton();
+        const myproductData = getProduct();
+        const updatedButton = isAlreadyInWishlist
+          ? buttonData.filter((item) => item.productTitle !== productData.productTitle)
+          : [...buttonData, productData];
+        const updatedProduct = isAlreadyInWishlist
+          ? myproductData.filter((item) => item.productTitle !== productData.productTitle)
+          : [...myproductData, productData];
+        saveButton(updatedButton);
+        saveProduct(updatedProduct);
+      }
 
-// Update the wishlist button (heart icon)
-function updateWishlistButton(wishlistButton, action) {
-  const heartIcon =
-    action === "add"
-      ? `<svg class="heart-filled" width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.3 5.71002C18.841 5.24601 18.2943 4.87797 17.6917 4.62731C17.0891 4.37666 16.4426 4.2484 15.79 4.25002C15.1373 4.2484 14.4909 4.37666 13.8883 4.62731C13.2857 4.87797 12.739 5.24601 12.28 5.71002L12 6.00002L11.72 5.72001C10.7917 4.79182 9.53273 4.27037 8.22 4.27037C6.90726 4.27037 5.64829 4.79182 4.72 5.72001C3.80386 6.65466 3.29071 7.91125 3.29071 9.22002C3.29071 10.5288 3.80386 11.7854 4.72 12.72L11.49 19.51C11.6306 19.6505 11.8212 19.7294 12.02 19.7294C12.2187 19.7294 12.4094 19.6505 12.55 19.51L19.32 12.72C20.2365 11.7823 20.7479 10.5221 20.7442 9.21092C20.7405 7.89973 20.2218 6.64248 19.3 5.71002Z" fill="#000000"/></svg>`
-      : `<svg class="heart-outline" width="35px" height="35px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="0" fill="none" width="24" height="24"/><g><path d="M16.5 4.5c2.206 0 4 1.794 4 4 0 4.67-5.543 8.94-8.5 11.023C9.043 17.44 3.5 13.17 3.5 8.5c0-2.206 1.794-4 4-4 1.298 0 2.522.638 3.273 1.706L12 7.953l1.227-1.746c.75-1.07 1.975-1.707 3.273-1.707m0-1.5c-1.862 0-3.505.928-4.5 2.344C11.005 3.928 9.362 3 7.5 3 4.462 3 2 5.462 2 8.5c0 5.72 6.5 10.438 10 12.85 3.5-2.412 10-7.13 10-12.85C22 5.462 19.538 3 16.5 3z"/></g></svg>`;
-  if(wishlistButton){ 
-    wishlistButton.innerHTML = heartIcon;
-  }
-}
+      // Update the wishlist button (heart icon)
+      function updateWishlistButton(wishlistButton, action) {
+        const heartIcon =
+          action === 'add'
+            ? `<svg class="heart-filled" width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.3 5.71002C18.841 5.24601 18.2943 4.87797 17.6917 4.62731C17.0891 4.37666 16.4426 4.2484 15.79 4.25002C15.1373 4.2484 14.4909 4.37666 13.8883 4.62731C13.2857 4.87797 12.739 5.24601 12.28 5.71002L12 6.00002L11.72 5.72001C10.7917 4.79182 9.53273 4.27037 8.22 4.27037C6.90726 4.27037 5.64829 4.79182 4.72 5.72001C3.80386 6.65466 3.29071 7.91125 3.29071 9.22002C3.29071 10.5288 3.80386 11.7854 4.72 12.72L11.49 19.51C11.6306 19.6505 11.8212 19.7294 12.02 19.7294C12.2187 19.7294 12.4094 19.6505 12.55 19.51L19.32 12.72C20.2365 11.7823 20.7479 10.5221 20.7442 9.21092C20.7405 7.89973 20.2218 6.64248 19.3 5.71002Z" fill="#000000"/></svg>`
+            : `<svg class="heart-outline" width="35px" height="35px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="0" fill="none" width="24" height="24"/><g><path d="M16.5 4.5c2.206 0 4 1.794 4 4 0 4.67-5.543 8.94-8.5 11.023C9.043 17.44 3.5 13.17 3.5 8.5c0-2.206 1.794-4 4-4 1.298 0 2.522.638 3.273 1.706L12 7.953l1.227-1.746c.75-1.07 1.975-1.707 3.273-1.707m0-1.5c-1.862 0-3.505.928-4.5 2.344C11.005 3.928 9.362 3 7.5 3 4.462 3 2 5.462 2 8.5c0 5.72 6.5 10.438 10 12.85 3.5-2.412 10-7.13 10-12.85C22 5.462 19.538 3 16.5 3z"/></g></svg>`;
+        if (wishlistButton) {
+          wishlistButton.innerHTML = heartIcon;
+        }
+      }
 
-// Display the updated wishlist
-function displayWishlist() {
-  const wishlistData = getWishlist();
-  const wishListCount = document.querySelector(".button-floating .wishCount");
-  const wishlistBlock = document.querySelector(".js-wishlistBlock");
-  if (!wishListCount) return;
-  wishListCount.classList.toggle("wishListCount", wishlistData.length > 0);
-  wishListCount.textContent = wishlistData.length || "";
+      // Display the updated wishlist
+      function displayWishlist() {
+        const wishlistData = getWishlist();
+        const wishListCount = document.querySelector('.button-floating .wishCount');
+        const wishlistBlock = document.querySelector('.js-wishlistBlock');
+        if (!wishListCount) return;
+        wishListCount.classList.toggle('wishListCount', wishlistData.length > 0);
+        wishListCount.textContent = wishlistData.length || '';
 
-  const wishlistHtml = wishlistData.length
-    ? wishlistData.map(createWishlistItem).join("")
-    : "<p>Your wishlist is empty.</p>";
+        const wishlistHtml = wishlistData.length
+          ? wishlistData.map(createWishlistItem).join('')
+          : '<p>Your wishlist is empty.</p>';
 
-  if (wishlistBlock) {
-    wishlistBlock.innerHTML = wishlistHtml;
-  }
-  // Update wishlist buttons based on the current wishlist
-  updateWishlistButtons();
-}
+        if (wishlistBlock) {
+          wishlistBlock.innerHTML = wishlistHtml;
+        }
+        // Update wishlist buttons based on the current wishlist
+        updateWishlistButtons();
+      }
 
-// Update the state of each wishlist button on page load
-  function updateWishlistButtons() {
-  const wishlistData = getWishlist();
-  
-  // Iterate over each wishlist button
-  document.querySelectorAll(".wishlist_button").forEach((button) => {
-    let productTitle = button.getAttribute('data-prodtitle') || '{{ product.title }}' || localStorage.getItem('productTitle').productTitle;
-    let mybtn = button;
-    // If the product title is not directly from the button, check local storage
-    if (!productTitle) {
-      const storedButtons = JSON.parse(localStorage.getItem('buttonData').buttonHTML) || [];
-      mybtn = storedButtons;
-    }
-    // Check if the product is in the wishlist
-    const isInWishlist = wishlistData.some((item) => item.productTitle === productTitle);
-    updateWishlistButton(mybtn, isInWishlist ? "add" : "remove");
-  });    
-}
+      // Update the state of each wishlist button on page load
+      function updateWishlistButtons() {
+        const wishlistData = getWishlist();
 
-function removeFromWishlist(productTitle) {
-  const wishlistData = getWishlist();
-  const updatedWishlist = wishlistData.filter(
-    (item) => item.productTitle !== productTitle
-  );
-  saveWishlist(updatedWishlist);
-  displayWishlist();
-}
+        // Iterate over each wishlist button
+        document.querySelectorAll('.wishlist_button').forEach((button) => {
+          let productTitle =
+            button.getAttribute('data-prodtitle') ||
+            '{{ product.title }}' ||
+            localStorage.getItem('productTitle').productTitle;
+          let mybtn = button;
+          // If the product title is not directly from the button, check local storage
+          if (!productTitle) {
+            const storedButtons = JSON.parse(localStorage.getItem('buttonData').buttonHTML) || [];
+            mybtn = storedButtons;
+          }
+          // Check if the product is in the wishlist
+          const isInWishlist = wishlistData.some((item) => item.productTitle === productTitle);
+          updateWishlistButton(mybtn, isInWishlist ? 'add' : 'remove');
+        });
+      }
 
-// Create a wishlist item (HTML) for display
-function createWishlistItem(item) {
-  return `
+      function removeFromWishlist(productTitle) {
+        const wishlistData = getWishlist();
+        const updatedWishlist = wishlistData.filter((item) => item.productTitle !== productTitle);
+        saveWishlist(updatedWishlist);
+        displayWishlist();
+      }
+
+      // Create a wishlist item (HTML) for display
+      function createWishlistItem(item) {
+        return `
 <div class="wishlist-product__list">
   <div class="c-product">
     <a href="${item.productUrl}">
@@ -748,53 +773,54 @@ function createWishlistItem(item) {
     <a href="${item.productUrl}">${item.productTitle}</a>
   </div>
 </div>`;
-}
+      }
 
-// Initialize wishlist functionality on page load
-document.addEventListener("DOMContentLoaded", () => { 
-  const intervalID = setInterval(()=>{
-  displayWishlist();
-  },2000);
+      // Initialize wishlist functionality on page load
+      document.addEventListener('DOMContentLoaded', () => {
+        const intervalID = setInterval(() => {
+          displayWishlist();
+        }, 2000);
 
-  setTimeout(()=>{
-    clearInterval(intervalID);
-  }, 5000);
+        setTimeout(() => {
+          clearInterval(intervalID);
+        }, 5000);
 
-document.body.addEventListener('click', function(event) {
-  // console.log(event.target);
-  const button = event.target.closest('.wishlist_button');
-  if (button) {
-    const productData = {
-      productId: button.getAttribute('data-prodId'),
-      productTitle: button.getAttribute('data-prodtitle'),
-      productImg: button.getAttribute('data-prodimg'),
-      productPrice: button.getAttribute('data-prodprice'),
-      productUrl: button.getAttribute('data-produrl')
-    };
-    // console.log(productData.productId, 'productData.productId');
-    let storedProductData = JSON.parse(localStorage.getItem('productData')) || [];
-    // Check if productId already exists
-    const isProductStored = storedProductData.some(product => product.productId === productData.productId);
-    if (!isProductStored) {
-      storedProductData.push(productData);
-      localStorage.setItem('productData', JSON.stringify(storedProductData));
-    }
+        document.body.addEventListener('click', function (event) {
+          // console.log(event.target);
+          const button = event.target.closest('.wishlist_button');
+          if (button) {
+            const productData = {
+              productId: button.getAttribute('data-prodId'),
+              productTitle: button.getAttribute('data-prodtitle'),
+              productImg: button.getAttribute('data-prodimg'),
+              productPrice: button.getAttribute('data-prodprice'),
+              productUrl: button.getAttribute('data-produrl'),
+            };
+            // console.log(productData.productId, 'productData.productId');
+            let storedProductData = JSON.parse(localStorage.getItem('productData')) || [];
+            // Check if productId already exists
+            const isProductStored = storedProductData.some((product) => product.productId === productData.productId);
+            if (!isProductStored) {
+              storedProductData.push(productData);
+              localStorage.setItem('productData', JSON.stringify(storedProductData));
+            }
 
-    let storedButtons = JSON.parse(localStorage.getItem('buttonData')) || [];
-    const isButtonStored = storedButtons.some(storedButton => storedButton.productId === productData.productId);
-    if (!isButtonStored) {
-      const buttonData = {
-        productId: productData.productId,
-        buttonHTML: button.outerHTML
-      };
-      storedButtons.push(buttonData);
-      localStorage.setItem('buttonData', JSON.stringify(storedButtons));
-    }
-    toggleWishlist(productData, button);
-  } 
-});
-
-});
+            let storedButtons = JSON.parse(localStorage.getItem('buttonData')) || [];
+            const isButtonStored = storedButtons.some(
+              (storedButton) => storedButton.productId === productData.productId
+            );
+            if (!isButtonStored) {
+              const buttonData = {
+                productId: productData.productId,
+                buttonHTML: button.outerHTML,
+              };
+              storedButtons.push(buttonData);
+              localStorage.setItem('buttonData', JSON.stringify(storedButtons));
+            }
+            toggleWishlist(productData, button);
+          }
+        });
+      });
     </script>
   </body>
 </html>
