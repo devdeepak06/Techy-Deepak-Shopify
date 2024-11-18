@@ -1,0 +1,478 @@
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{%- assign product_form_id = 'product-form-' | append: section.id -%}
+{% assign section_id = section.id %}
+<style>
+      .collection-slider-title{
+          text-align: center;
+          font-size: 26px;
+          font-weight: bold;
+        }
+        .top_tab {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 30px 0;
+        }
+        .top_tab_inner {
+        padding: 0;
+        color: #777777;
+        margin: 0 15px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 20px;
+        letter-spacing: normal;
+        text-transform: capitalize;
+      }
+        .top_tab_inner.active_tab {
+        border-bottom: 1px solid #1ef1f1;
+        color: #000;
+        border-bottom-width: 2px;
+        }
+
+        .productItem{
+        margin: auto;
+        }
+  .prodImage{
+    cursor: pointer;
+      position: relative;
+  }
+      .productItem img{
+          width: 100%;
+        }
+        .productItem a{
+        text-decoration: none;
+        color: #7c7c7c;
+        }
+        .productItem a .productTitle{
+        color: #7c7c7c;
+        font-size: 16px;
+        }
+        .productItem a:hover .productTitle{
+        color: #000;
+        }
+        .bottom_tab_inner{
+          display: none;
+        }
+        .bottom_tab_inner.active_content{
+        display: block;
+        }
+        .ul-slick-carousel {
+        padding: 15px 15px;
+        list-style-type: none;
+        }
+      @keyframes fadeInOut {
+      0% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .bottom_tab_inner.active_content ul{
+      animation: fadeInOut .6s 1;
+    }
+
+      .ul-slick-carousel:not(.slick-initialized){
+        opacity: 0 !important;
+      }
+        .bottom_tab_inner .product-list-item{
+        padding: 0 10px;
+        margin: auto !important;
+        }
+        .productPrice{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        }
+        .productPrice span{
+        font-weight: bold;
+        }
+        .addToCartButton .product-form__buttons{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+        .addToCartButton .product-form__buttons .button--full-width{
+        /* width: 50%; */
+        background: #000;
+        color: #fff !important;
+        /* border-radius: 25px; */
+        }
+        .addToCartButton .product-form__buttons .button--full-width::after,
+        .addToCartButton .product-form__buttons .button--full-width::before{
+        box-shadow: none;
+        }
+
+      .bottom_tab .bottom_tab_inner button.slick-next {
+            right: -25px;
+        }
+      .bottom_tab .bottom_tab_inner button.slick-prev{
+           left: -25px;
+         }
+       .bottom_tab .bottom_tab_inner button.slick-arrow{
+            position: absolute;
+            top: 45%;
+         z-index: 999;
+        }
+      .bottom_tab_inner .slick-prev:before{
+        content:"<";
+        color: #000;
+        font-weight: 600;
+        font-size: 25px;
+        opacity:1;
+        display:block;
+        transform:scaleY(2.2)!important;
+      }
+      .bottom_tab_inner .slick-next:before{
+        content:">";
+        color: #000;
+        font-weight: 600;
+        font-size: 25px;
+        opacity:1;
+        display:block;
+        transform:scaleY(2.2)!important;
+      }
+
+      @media screen and (min-width: 900px){
+        .custom-collection-slider{
+        padding: 0 100px;
+        }
+      }
+       @media (max-width: 999px){
+        .custom-collection-slider{
+        padding: 0 30px;
+        }
+        .bottom_tab_inner .slick-prev{
+          left:-50px;
+        }
+        .bottom_tab_inner .slick-next{
+          right:-50px;
+        }
+      }
+        @media screen and (max-width: 750px){
+        .top_tab_inner {
+        font-size: 15px;
+        margin: 0 10px;
+        }
+        .collection-slider-title {
+        font-size: 25px;
+        }
+        .top_tab {
+        margin: 20px 0;
+        }
+        }
+       @media (max-width: 699px){
+        .bottom_tab_inner .slick-prev:before,
+        .bottom_tab_inner .slick-next:before{
+          font-size: 20px;
+        }
+        .bottom_tab_inner .slick-prev{
+          left:-5%;
+        }
+        .bottom_tab_inner .slick-next{
+          right:-5%;
+        }
+        .bottom_tab_inner .cstm-page-width{
+          padding:0px;
+        }
+      }
+        @media screen and (max-width: 425px){
+        .top_tab_inner {
+        font-size: 12px;
+        margin: 0 8px;
+        }
+        .collection-slider-title {
+        font-size: 22px;
+        }
+        .top_tab {
+        margin: 10px 0;
+        }
+        }
+        @media screen and (max-width: 320px){
+        .top_tab_inner {
+        font-size: 10px;
+        margin: 0 6px;
+        }
+        .collection-slider-title {
+        font-size: 15px;
+        }
+        .top_tab {
+        margin: 8px 0;
+        }
+        }
+</style>
+<div class="custom-collection-slider section__{{ section.id }}">
+  <div class="collection-slider-title">{{ section.settings.title }}</div>
+  <div class="top_tab">
+    {% for block in section.blocks %}
+      <div
+        class="top_tab_inner {% if forloop.first %}active_tab{% endif %}"
+        tab-index="{{ block.settings.title |handle }}"
+      >
+        {{ block.settings.title }}
+      </div>
+    {% endfor %}
+  </div>
+  <div class="bottom_tab">
+    {% for block in section.blocks %}
+      <div class="bottom_tab_inner {% if forloop.first %}active_content{% endif %} cstm__{{ block.settings.title |handle }}">
+        {% assign collection = collections[block.settings.collection] %}
+        <ul class="ul-slick-carousel">
+          {% for product in collection.products %}
+            <li class="product-list-item">
+              <div class="productItem">
+                <div class="prodImage">
+                  <a href="{{ product.url }}">
+                    <img src="{{ product.featured_image | image_url }}" width="" height=""
+                  ></a>
+                  {% if settings['enable-wishlist'] %}
+                    <button
+                      class="wishlist_button prod_wishlist_button"
+                      data-prodId="wishlist__{{ product.id }}"
+                      data-prodhandle="{{ product.handle }}"
+                      data-prodtitle="{{ product.title }}"
+                      data-prodimg="{{ product.featured_image | image_url }}"
+                      data-prodprice="{{ product.price | money | remove_first: '' }}"
+                      data-produrl="{{ product.url }}"
+                      title="Add to wishlist"
+                    >
+                      <svg
+                        class="heart-outline"
+                        width="35px"
+                        height="35px"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect x="0" fill="none" width="24" height="24"/><g><path d="M16.5 4.5c2.206 0 4 1.794 4 4 0 4.67-5.543 8.94-8.5 11.023C9.043 17.44 3.5 13.17 3.5 8.5c0-2.206 1.794-4 4-4 1.298 0 2.522.638 3.273 1.706L12 7.953l1.227-1.746c.75-1.07 1.975-1.707 3.273-1.707m0-1.5c-1.862 0-3.505.928-4.5 2.344C11.005 3.928 9.362 3 7.5 3 4.462 3 2 5.462 2 8.5c0 5.72 6.5 10.438 10 12.85 3.5-2.412 10-7.13 10-12.85C22 5.462 19.538 3 16.5 3z"/></g>
+                      </svg>
+                    </button>
+                  {% endif %}
+                </div>
+                <a class="product-link" href="{{ product.url }}">
+                  <div class="productTitle">{{ product.title }}</div>
+                </a>
+                <div class="productPrice">
+                  <span>₹ {{ product.price | money_without_currency }}</span>
+                  <s>₹ {{ product.compare_at_price | money_without_currency }}</s>
+                </div>
+                <div class="addToCartButton">
+                  <product-form
+                    class="product-form"
+                    data-section-id="{{ section.id }}"
+                  >
+                    {%- form 'product',
+                      product,
+                      id: product_form_id,
+                      class: 'form',
+                      novalidate: 'novalidate',
+                      data-type: 'add-to-cart-form'
+                    -%}
+                      <input
+                        type="hidden"
+                        name="id"
+                        value="{{ product.selected_or_first_available_variant.id }}"
+                        {% if product.selected_or_first_available_variant.available == false
+                          or product.selected_or_first_available_variant == null
+                        %}
+                          disabled
+                        {% endif %}
+                        class="product-variant-id"
+                      >
+                      <div class="product-form__buttons">
+                        <button
+                          id="ProductSubmitButton-{{ section_id }}"
+                          type="submit"
+                          name="add"
+                          class="product-form__submit button button--full-width"
+                          {% if product.selected_or_first_available_variant.available == false
+                            or product.selected_or_first_available_variant == null
+                          %}
+                            disabled
+                          {% endif %}
+                        >
+                          <span>
+                            {%- if product.selected_or_first_available_variant == null -%}
+                              {{ 'products.product.unavailable' | t }}
+                            {%- elsif product.selected_or_first_available_variant.available == false -%}
+                              {{ 'products.product.sold_out' | t }}
+                            {%- else -%}
+                              {{ 'products.product.add_to_cart' | t }}
+                            {%- endif -%}
+                          </span>
+                          {%- render 'loading-spinner' -%}
+                        </button>
+                      </div>
+                    {%- endform -%}
+                  </product-form>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% comment %}
+  <script id="collection_products_details" type="application/json">
+    {
+      "products": [
+        {% for block in section.blocks %}
+          {% assign collection = collections[block.settings.collection] %}
+          {% for product in collection.products %}
+            {
+            "id": "{{ product.id }}",
+            "title": "{{ product.title | strip_html }}",
+            "featured_image": "{{ product.featured_image | image_url }}",
+            "price": "{{ product.price | money | remove_first: '' }}",
+            "url": "{{ product.url }}"
+            }{% if forloop.last == false %},{% endif %}
+          {% endfor %}{% if forloop.last == false %},{% endif %}
+        {% endfor %}
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {% assign product_handle = 'voll-rite-protein-diskettes-jar-of-250g-50-diskettes' %}
+    {% assign product = all_products[product_handle] %}
+
+    {
+      "id": "{{ product.id }}",
+      "title": "{{ product.title }}",
+      "handle": "{{ product.handle }}",
+      "featured_image": "{{ product.featured_image | image_url }}",
+      "images": [
+        {% for image in product.images %}
+        "{{ image.src | image_url }}"{% if forloop.last == false %},{% endif %}
+        {% endfor %}
+      ],
+      "price": "{{ product.price | money | remove_first: '' }}",
+      "compare_at_price": "{{ product.compare_at_price | money }}",
+      "url": "{{ product.url }}"
+      "description": "{{ product.description | strip_html }}",
+      "variants": [
+        {% for variant in product.variants %}
+        {
+          "id": "{{ variant.id }}",
+          "title": "{{ variant.title | strip_html }}",
+          "price": "{{ variant.price | money | remove_first: '' }}"
+        }{% if forloop.last == false %},{% endif %}
+        {% endfor %}
+      ]
+    }
+  </script>
+{% endcomment %}
+{% schema %}
+{
+  "name": "Collection Tab Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Our Favorites"
+    }
+  ],
+  "blocks":[
+    {
+      "type":"text",
+      "name":"Collection",
+      "settings":[
+      {
+      "type":"text",
+      "id":"title",
+      "label":"Title"
+    },
+     {
+      "type":"collection",
+      "id":"collection",
+      "label":"Collection"
+    }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Tab Slider"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+            document.addEventListener('DOMContentLoaded', function() {
+            document.body.addEventListener('click', function(event) {
+                if (event.target.classList.contains('top_tab_inner')) {
+                    var attr = event.target.getAttribute('tab-index');
+                    var classAdd = '.cstm__' + attr;
+                    document.querySelectorAll('.top_tab_inner').forEach(function(tab) {
+                        tab.classList.remove('active_tab');
+                    });
+                    event.target.classList.add('active_tab');
+
+                    document.querySelectorAll('.bottom_tab_inner').forEach(function(content) {
+                        content.classList.remove('active_content');
+                        content.style.opacity = "0";
+                        content.style.transform = "translateY(15px)";
+                    });
+                    var contentElement = document.querySelector(classAdd);
+                    if (contentElement) {
+                        contentElement.classList.add('active_content');
+                        contentElement.style.opacity = "1";
+                        contentElement.style.transform = "translateY(0px)";
+                    }
+                }
+            });
+            });
+
+      function initializeSlick() {
+      const $carousel = $('.active_content .ul-slick-carousel');
+
+      if ($carousel.hasClass('slick-initialized')) {
+        $carousel.slick('unslick');
+      }
+
+      $carousel.slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        arrows: true,
+        autoplay: false,
+        autoplaySpeed: 2000,
+        infinite: true,
+        responsive: [
+          {
+            breakpoint: 1000,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 700,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 321,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+      });
+    }
+  $(document).ready(function () {
+      initializeSlick();
+      $(document).on('click', '.top_tab .active_tab', function () {
+    setTimeout(initializeSlick, 10);
+  });
+    });
+</script>

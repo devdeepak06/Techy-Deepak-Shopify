@@ -1,0 +1,111 @@
+<div class="car-drawer optional-delivery">
+  <div class="card_tabs">
+    <span class="tab pickupLocationTitle" data-tab="pickup-location">Pickup</span>
+    <span class="tab dropoffAddressTitle" data-tab="dropoff-address">Drop off</span>
+    <span class="tab meetupAddressTitle" data-tab="meetup-address">Meet-up</span>
+  </div>
+
+  <cart-note class="expandedTabs">
+    <div class="pickup-location content">
+      <input type="checkbox" id="pickup-location" name="pickup-location">
+      <label for="pickup-location"></label>
+    </div>
+
+    <div class="dropoff-address content">
+      <input type="checkbox" id="dropoff-address" name="dropoff-address">
+      <label for="dropoff-address"></label>
+    </div>
+
+    <div class="meetup-address content">
+      <input type="checkbox" id="meetup-address" name="meetup-address">
+      <label for="meetup-address"></label>
+    </div>
+  </cart-note>
+</div>
+
+<style>
+    .card_tabs {
+        display: flex;
+      column-gap: 20px;
+      align-items: center;
+      justify-content: flex-start;
+      justify-content: center;
+    }
+  .optional-delivery{
+    padding: 10px 0;
+    border-bottom: 1px solid rgb(var(--text-color) / var(--divider-opacity));
+    border-top: 1px solid rgb(var(--text-color) / var(--divider-opacity));
+  }
+  .card_tabs span {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #343a40;
+      cursor: pointer;
+      border: 1px solid #dee2e6;
+      padding: 5px 10px;
+      border-radius: 4px;
+      background-color: #ffffff;
+    }
+  .car-drawer input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .content {
+    display: none;
+  }
+
+  .content.active {
+    display: block;
+  }
+
+  .card_tabs span.active {
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+  }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // start code for function to toggle tabs
+    function toggleTab(tab) {
+      document.querySelectorAll('.card_tabs .tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.expandedTabs .content').forEach(content => content.classList.remove('active'));
+      document.querySelector(`.${tab.getAttribute('data-tab')}`).classList.add('active');
+    }
+    document.querySelectorAll('.card_tabs .tab').forEach(tab => {
+      tab.addEventListener('click', () => toggleTab(tab));
+    });
+// end code for event listeners for tab
+       const addresses = {
+          'pickup-location': `i am pickup`,
+          'dropoff-address': 'i am dropoff',
+          'meetup-address': 'i am meetup'
+        };
+      
+       Object.keys(addresses).forEach(key => {
+          document.querySelector(`.${key} label`).textContent = addresses[key];
+        });
+      
+      // Start code to Load checkbox states from local storage
+        Object.keys(addresses).forEach(key => {
+          const checkbox = document.getElementById(key);
+          if (localStorage.getItem(key) === 'true') {
+            checkbox.checked = true;
+          } else {
+            checkbox.checked = false;
+          }
+        });
+      // End code to Load checkbox states from local storage
+      
+      // Start code for Save checkbox state to local storage on change
+        document.querySelectorAll('.expandedTabs input[type="checkbox"]').forEach(checkbox => {
+          checkbox.addEventListener("change", function() {
+            localStorage.setItem(this.id, this.checked);
+          });
+        });
+  });
+</script>

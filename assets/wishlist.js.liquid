@@ -1,0 +1,119 @@
+// Utility to fetch wishlist from localStorage
+function getWishlist() {
+  return JSON.parse(localStorage.getItem("wishlist")) || [];
+}
+
+// Utility to save wishlist to localStorage
+function saveWishlist(wishlist) {
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+}
+
+// Toggle Wishlist for a specific product
+function toggleWishlist(productData, wishlistButton) {
+  const wishlistData = getWishlist();
+  const isAlreadyInWishlist = wishlistData.some(item => item.productTitle === productData.productTitle);
+  
+  const updatedWishlist = isAlreadyInWishlist
+    ? wishlistData.filter(item => item.productTitle !== productData.productTitle)
+    : [...wishlistData, productData];
+
+  saveWishlist(updatedWishlist);
+  updateWishlistButton(wishlistButton, isAlreadyInWishlist ? "remove" : "add");
+  displayWishlist();
+}
+
+// Update the wishlist button (heart icon)
+function updateWishlistButton(wishlistButton, action) {
+  const heartIcon = action === "add"
+    ? `<svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" viewBox="0 0 24 24" fill="none" stroke="#d00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.35l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>`
+    : `<svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.35l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>`;
+
+  wishlistButton.innerHTML = heartIcon;
+}
+
+// Display the updated wishlist
+function displayWishlist() {
+  const wishlistData = getWishlist();
+  const wishListCount = document.querySelector(".button-floating .wishCount");
+  const wishlistBlock = document.querySelector(".js-wishlistBlock");
+
+  if (wishListCount) {
+    wishListCount.classList.toggle("wishListCount", wishlistData.length > 0);
+    wishListCount.textContent = wishlistData.length || "";
+  }
+
+  const wishlistHtml = wishlistData.length
+    ? wishlistData.map(createWishlistItem).join("")
+    : "<p>Your wishlist is empty.</p>";
+
+  if (wishlistBlock) {
+    wishlistBlock.innerHTML = wishlistHtml;
+  }
+
+  updateWishlistButtons();
+}
+
+// Update the state of each wishlist button on page load
+function updateWishlistButtons() {
+  const wishlistData = getWishlist();
+  document.querySelectorAll(".wishlist_button").forEach(button => {
+    const productTitle = button.getAttribute('data-prodtitle');
+    const isInWishlist = wishlistData.some(item => item.productTitle === productTitle);
+    updateWishlistButton(button, isInWishlist ? "add" : "remove");
+  });
+}
+
+// Remove item from wishlist
+function removeFromWishlist(productTitle) {
+  const wishlistData = getWishlist();
+  const updatedWishlist = wishlistData.filter(item => item.productTitle !== productTitle);
+  saveWishlist(updatedWishlist);
+  displayWishlist();
+}
+
+// Create a wishlist item (HTML) for display
+function createWishlistItem(item) {
+  return `
+    <div class="wishlist-product__list">
+      <div class="c-product">
+        <a href="${item.productUrl}">
+          <img class="pdpimage" src="${item.productImg}" alt="${item.productTitle}">
+        </a>
+        <button class="removebutton" onclick="removeFromWishlist('${item.productTitle}')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="wishlist-text">
+        <a href="${item.productUrl}">${item.productTitle}</a>
+      </div>
+    </div>`;
+}
+
+// Initialize wishlist functionality on page load
+document.addEventListener("DOMContentLoaded", () => {
+  displayWishlist();
+
+  // Function to get product data from button attributes
+  function getProductData(button) {
+    return {
+      productTitle: button.getAttribute('data-prodtitle'),
+      productImg: button.getAttribute('data-prodimg'),
+      productPrice: button.getAttribute('data-prodprice'),
+      productUrl: button.getAttribute('data-produrl')
+    };
+  }
+
+  // Handle wishlist toggle
+  function handleWishlistToggle(button) {
+    const productData = getProductData(button);
+    toggleWishlist(productData, button);
+  }
+
+  // Use event delegation to handle button clicks
+  document.body.addEventListener('click', function(event) {
+    const button = event.target.closest(".wishlist_button");
+    if (button) {
+      handleWishlistToggle(button);
+    }
+  });
+});

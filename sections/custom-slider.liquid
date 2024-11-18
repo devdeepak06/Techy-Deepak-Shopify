@@ -1,0 +1,194 @@
+<!-- sections/custom-slider.liquid -->
+<div class="custom-slider-section">
+  <!--
+    <h4 class="section-heading">Task 2: Custom Section for Slider with content through shopify template using schema</h4>
+  -->
+  <div class="slider-wrapper">
+    {% for block in section.blocks %}
+      <div class="slider-slide">
+        <img
+          src="{{ block.settings.image | image_url: width: 360, height: 200}}"
+          width=""
+          height=""
+          alt="{{ block.settings.heading }}"
+        >
+        <div class="slide-content">
+          <h2>{{ block.settings.heading }}</h2>
+          <p>{{ block.settings.text }}</p>
+          {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}" class="slide-button">{{ block.settings.button_text }}</a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <!-- Navigation Arrows -->
+  <!--
+    <button class="slider-prev">&lt;</button>
+    <button class="slider-next">&gt;</button>
+  -->
+
+  <!-- Dots Navigation -->
+  <div class="slider-dots">
+    {% for block in section.blocks %}
+      <span class="dot"></span>
+    {% endfor %}
+  </div>
+</div>
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+    const sliderWrapper = document.querySelector('.slider-wrapper');
+    const slides = document.querySelectorAll('.slider-slide');
+    const totalSlides = slides.length;
+    const dots = document.querySelectorAll('.dot');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+      sliderWrapper.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach(dot => dot.classList.remove('active'));
+      dots[index].classList.add('active');
+    }
+
+    function goToNextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      showSlide(currentIndex);
+    }
+
+    function goToPrevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      showSlide(currentIndex);
+    }
+    // Auto-slide every 2 seconds
+    const autoSlide = setInterval(goToNextSlide, 2000);
+
+    // Arrow button event listeners
+    document.querySelector('.slider-next').addEventListener('click', function() {
+      clearInterval(autoSlide); 
+      goToNextSlide();
+    });
+
+    document.querySelector('.slider-prev').addEventListener('click', function() {
+      clearInterval(autoSlide);
+      goToPrevSlide();
+    });
+
+    // Dots navigation
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', function() {
+        clearInterval(autoSlide);
+        showSlide(index);
+      });
+    });
+
+    // Show the first slide and activate the first dot
+    showSlide(currentIndex);
+  });
+</script>
+{% schema %}
+{
+  "name": "Custom Slider Section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Slide Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Slide Text",
+          "default": "This is the slide content."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button Link",
+          "default": "/"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Learn More"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Slider",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .custom-slider-section {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 40px 0;
+  }
+
+  .slider-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+  }
+
+  .slider-slide {
+    min-width: 100%;
+    position: relative;
+    text-align: center;
+  }
+
+  .slider-slide img {
+    width: 40%;
+    margin: auto;
+    height: auto;
+    display: block;
+  }
+
+  .slide-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: red;
+    text-align: center;
+  }
+
+  .slide-content h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+
+  .slide-content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .slide-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+
+  .slide-button:hover {
+    background-color: #0056b3;
+  }
+</style>

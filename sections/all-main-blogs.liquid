@@ -1,0 +1,280 @@
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+<style>
+  .blog_nav_list{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0px;
+  }
+  .blog_nav_list .blog_nav_item{
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 20px;
+    line-height: 1.17;
+    padding: 8px 16px;
+    letter-spacing: -0.48px;
+    color: #1a2024;
+  }
+  .blog_nav_list .blog_nav_item.active{
+    background: #000;
+    border-radius: 17px;
+    background-color: #ecf0f4;
+  }
+  .articles{
+    display: none;
+  }
+  .articles.active{
+    display: block;
+  }
+  .blogNav{
+    display: flex;
+        align-items: center;
+    justify-content: space-between;
+  }
+  .view_all_articles a{
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 20px;
+    line-height: 1.17;
+    padding: 8px 16px;
+    letter-spacing: -0.48px;
+    color: #2F5B96;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  @media screen and (max-width: 425px){
+     .blog_nav_list .blog_nav_item{
+    margin-right: 0px;
+  }
+     .blog_nav_list{
+    gap: 0;
+  }
+  }
+</style>
+{%- paginate blog.articles by 6 -%}
+  <div class="main-blog page-width section-{{ section.id }}-padding">
+    <h1 class="title--primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {{ blog.title | escape }}
+    </h1>
+    <div class="blog_nav_list"></div>
+
+    <div class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}">
+      {%- for article in blog.articles -%}
+        <div
+          class="blog-articles__article article{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+            style="--animation-order: {{ forloop.index }};"
+          {% endif %}
+        >
+          {%- render 'article-card',
+            article: article,
+            media_height: section.settings.image_height,
+            media_aspect_ratio: article.image.aspect_ratio,
+            show_image: section.settings.show_image,
+            show_date: section.settings.show_date,
+            show_author: section.settings.show_author,
+            show_excerpt: true
+          -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      {%- render 'pagination', paginate: paginate -%}
+    {%- endif -%}
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "All main blogs",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.main-blog.settings.header.content"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        {
+          "value": "grid",
+          "label": "t:sections.main-blog.settings.layout.options__1.label"
+        },
+        {
+          "value": "collage",
+          "label": "t:sections.main-blog.settings.layout.options__2.label"
+        }
+      ],
+      "default": "collage",
+      "label": "t:sections.main-blog.settings.layout.label",
+      "info": "t:sections.main-blog.settings.layout.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "default": true,
+      "label": "t:sections.main-blog.settings.show_image.label"
+    },
+    {
+      "type": "select",
+      "id": "image_height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.main-blog.settings.image_height.options__1.label"
+        },
+        {
+          "value": "small",
+          "label": "t:sections.main-blog.settings.image_height.options__2.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.main-blog.settings.image_height.options__3.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.main-blog.settings.image_height.options__4.label"
+        }
+      ],
+      "default": "medium",
+      "label": "t:sections.main-blog.settings.image_height.label",
+      "info": "t:sections.main-blog.settings.image_height.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "t:sections.main-blog.settings.show_date.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "default": false,
+      "label": "t:sections.main-blog.settings.show_author.label"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:sections.main-blog.settings.paragraph.content"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "All main blogs"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+ document.addEventListener("DOMContentLoaded", function () {
+  async function fetchBlogs() {
+    try {
+      const response = await fetch('https://techydeepak.myshopify.com/admin/api/2024-10/blogs.json', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Shopify-Access-Token': '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',
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      data.blogs.forEach((blog) => {
+        const blog_nav_list = document.querySelector('.blog_nav_list');
+        const blogLink = `blogs/${blog.handle}`;
+        const blogHandle = blog.handle;
+        const blogItem = document.createElement('span');
+        blogItem.classList.add('blog_nav_item');
+        blogItem.setAttribute("data-handle", blog.handle);
+        blogItem.setAttribute("data-url", blogLink);
+        blogItem.textContent = blog.title;
+        blog_nav_list.appendChild(blogItem);
+      });
+    } catch (error) {
+      console.error('Error fetching blogs:', error);
+    }
+  }
+  fetchBlogs();
+setTimeout(()=>{
+const path = window.location.pathname;
+const param = path.split('/').pop();
+const blogNavList = document.querySelectorAll('.blog_nav_list .blog_nav_item');
+blogNavList.forEach((blogNav) => {
+const dataHandle = blogNav.getAttribute("data-handle");
+if (dataHandle === param) {
+blogNav.classList.add('active');
+}
+
+blogNav.addEventListener("click", () => {
+      const navHandle = blogNav.getAttribute("data-handle");
+      const dataUrl = blogNav.getAttribute("data-url");
+      blogNavList.forEach((navItem) => {
+        if (navItem !== blogNav) {
+          navItem.classList.remove("active");
+        }
+      });
+      blogNav.classList.add("active");
+  const newParam = dataUrl.split('/').pop();
+  const pathArray = path.split('/');
+  pathArray[pathArray.length - 1] = newParam;
+  const newPath = pathArray.join('/');
+   const newUrl = `${window.location.origin}${newPath}`;
+  window.location.href = newUrl;
+  
+    });
+
+  
+});
+
+}, 1500);
+});
+</script>

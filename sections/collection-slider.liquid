@@ -1,0 +1,390 @@
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{%- assign product_form_id = 'product-form-' | append: section.id -%}
+{% assign section_id = section.id %}
+<style>
+  .collection-slider-title{
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+    }
+    .top_tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0;
+    }
+    .top_tab_inner {
+    padding: 0;
+    color: #777777;
+    margin: 0 15px;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 100px;
+    background: #f9f3f2;
+    font-size: 20px;
+    letter-spacing: normal;
+    text-transform: capitalize;
+    padding: 8px 26px;
+  }
+    .top_tab_inner.active_tab {
+    color: #000;
+    border-bottom-width: 2px;
+    border-radius: 100px;
+    background: #e9a025;
+    color: #fff;
+    font-size: 20px;
+    letter-spacing: normal;
+    text-transform: capitalize;
+    padding: 8px 26px;
+    }
+
+   .top_tab_inner.active_tab:not(:only-child) {
+      position: relative;
+  }
+
+      .top_tab_inner.active_tab:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: .5em solid transparent;
+      border-top-color: #e9a025;
+      border-bottom: 0;
+      margin-left: -.5em;
+      margin-bottom: -.5em;
+  }
+
+    .productItem{
+    margin: auto;
+    }
+    .productItem a{
+    text-decoration: none;
+    color: #7c7c7c;
+    }
+    .productItem a .productTitle{
+    color: #7c7c7c;
+    font-size: 16px;
+    }
+    .productItem a:hover .productTitle{
+    color: #000;
+    }
+    .bottom_tab_inner{
+      display: none;
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    .bottom_tab_inner.active_content{
+    display: block;
+    opacity: 1;
+      transform: translateY(0px);
+    }
+    .bottom_tab_inner ul {
+    padding: 15px 15px;
+    list-style-type: none;
+    }
+    .bottom_tab_inner .product-list-item{
+    padding: 0 10px;
+    margin: auto !important;
+    }
+    .productPrice{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    }
+    .productPrice span{
+    font-weight: bold;
+    }
+    .addToCartButton .product-form__buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+    .addToCartButton .product-form__buttons .button--full-width{
+    width: 50%;
+    background: #e9a025;
+    color: #fff !important;
+    border-radius: 25px;
+    }
+    .addToCartButton .product-form__buttons .button--full-width::after,
+    .addToCartButton .product-form__buttons .button--full-width::before{
+    box-shadow: none;
+    }
+  .owl-carousel .owl-nav button{
+    top: 50%;
+    font-size: 50px !important;
+    position: absolute;
+    z-index: 999;
+    }
+    .owl-carousel .owl-nav button.owl-prev{
+    left: 0;
+    }
+    .owl-carousel .owl-nav button.owl-next{
+    right: 0;
+    }
+  .bottom_tab .bottom_tab_inner button.slick-next {
+        right: -25px;
+    }
+  .bottom_tab .bottom_tab_inner button.slick-prev{
+       left: -25px;
+     }
+   .bottom_tab .bottom_tab_inner button.slick-arrow{
+        position: absolute;
+        top: 45%;
+     z-index: 999;
+    }
+  .bottom_tab_inner .slick-prev:before{
+    content:"<";
+    color: #000;
+    font-weight: 600;
+    font-size: 25px;
+    opacity:1;
+    display:block;
+    transform:scaleY(2.2)!important;
+  }
+  .bottom_tab_inner .slick-next:before{
+    content:">";
+    color: #000;
+    font-weight: 600;
+    font-size: 25px;
+    opacity:1;
+    display:block;
+    transform:scaleY(2.2)!important;
+  }
+
+  @media screen and (min-width: 900px){
+    .custom-collection-slider{
+    padding: 0 100px;
+    }
+  }
+   @media (max-width: 999px){
+    .custom-collection-slider{
+    padding: 0 30px;
+    }
+    .bottom_tab_inner .slick-prev{
+      left:-50px;
+    }
+    .bottom_tab_inner .slick-next{
+      right:-50px;
+    }
+  }
+    @media screen and (max-width: 750px){
+    .top_tab_inner {
+    font-size: 15px;
+    margin: 0 10px;
+    }
+    .collection-slider-title {
+    font-size: 25px;
+    }
+    .top_tab {
+    margin: 20px 0;
+    }
+    }
+   @media (max-width: 699px){
+    .bottom_tab_inner .slick-prev:before,
+    .bottom_tab_inner .slick-next:before{
+      font-size: 20px;
+    }
+    .bottom_tab_inner .slick-prev{
+      left:-5%;
+    }
+    .bottom_tab_inner .slick-next{
+      right:-5%;
+    }
+    .bottom_tab_inner .cstm-page-width{
+      padding:0px;
+    }
+  }
+    @media screen and (max-width: 425px){
+    .top_tab_inner {
+    font-size: 12px;
+    margin: 0 8px;
+    }
+    .collection-slider-title {
+    font-size: 22px;
+    }
+    .top_tab {
+    margin: 10px 0;
+    }
+    }
+    @media screen and (max-width: 320px){
+    .top_tab_inner {
+    font-size: 10px;
+    margin: 0 6px;
+    }
+    .collection-slider-title {
+    font-size: 15px;
+    }
+    .top_tab {
+    margin: 8px 0;
+    }
+    }
+</style>
+<div class="custom-collection-slider section__{{ section.id }}">
+  <div class="collection-slider-title">{{ section.settings.title }}</div>
+  <div class="top_tab">
+    {% for block in section.blocks %}
+      <div
+        class="top_tab_inner {% if forloop.first %}active_tab{% endif %}"
+        tab-index="{{ block.settings.title |handle }}"
+      >
+        {{ block.settings.title }}
+      </div>
+    {% endfor %}
+  </div>
+  <div class="bottom_tab">
+    {% for block in section.blocks %}
+      <div class="bottom_tab_inner {% if forloop.first %}active_content{% endif %} cstm__{{ block.settings.title |handle }}">
+        {% assign collection = collections[block.settings.collection] %}
+        <ul class="owl-carousel">
+          {% for product in collection.products %}
+            <li class="product-list-item">
+              <div class="productItem">
+                <a href="{{ product.url }}">
+                  <img src="{{ product.featured_image | image_url }}" width="" height="">
+                  <div class="productTitle">{{ product.title }}</div>
+                </a>
+                <div class="productPrice">
+                  <span>₹ {{ product.price | money_without_currency }}</span>
+                  <s>₹ {{ product.compare_at_price | money_without_currency }}</s>
+                </div>
+                <div class="addToCartButton">
+                  <product-form
+                    class="product-form"
+                    data-section-id="{{ section.id }}"
+                  >
+                    {%- form 'product',
+                      product,
+                      id: product_form_id,
+                      class: 'form',
+                      novalidate: 'novalidate',
+                      data-type: 'add-to-cart-form'
+                    -%}
+                      <input
+                        type="hidden"
+                        name="id"
+                        value="{{ product.selected_or_first_available_variant.id }}"
+                        class="product-variant-id"
+                        {% if product.selected_or_first_available_variant.available == false %}
+                          disabled
+                        {% endif %}
+                      >
+                      <div class="product-form__buttons">
+                        <button
+                          id="{{ product_form_id }}-submit"
+                          type="submit"
+                          name="add"
+                          class="product-form__submit button button--full-width"
+                          aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ product.id }}"
+                          data-sold-out-message="true"
+                          {% if product.selected_or_first_available_variant.available == false %}
+                            disabled
+                          {% endif %}
+                        >
+                          <span>
+                            {%- if product.selected_or_first_available_variant.available -%}
+                              {{ 'products.product.add_to_cart' | t }}
+                            {%- else -%}
+                              {{ 'products.product.sold_out' | t }}
+                            {%- endif -%}
+                          </span>
+                          {%- render 'loading-spinner' -%}
+                        </button>
+                      </div>
+                    {%- endform -%}
+                  </product-form>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Our Favorites"
+    }
+  ],
+  "blocks":[
+    {
+      "type":"text",
+      "name":"Collection",
+      "settings":[
+      {
+      "type":"text",
+      "id":"title",
+      "label":"Title"
+    },
+     {
+      "type":"collection",
+      "id":"collection",
+      "label":"Collection"
+    }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection slider"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    document.body.addEventListener('click', function(event) {
+        if (event.target.classList.contains('top_tab_inner')) {
+            var attr = event.target.getAttribute('tab-index');
+            var classAdd = '.cstm__' + attr;
+            document.querySelectorAll('.top_tab_inner').forEach(function(tab) {
+                tab.classList.remove('active_tab');
+            });
+            event.target.classList.add('active_tab');
+            document.querySelectorAll('.bottom_tab_inner').forEach(function(content) {
+                content.classList.remove('active_content');
+            });
+            var contentElement = document.querySelector(classAdd);
+            if (contentElement) {
+                contentElement.classList.add('active_content');
+            }
+        }
+    });
+    });
+    $(document).ready(function(){
+      $(".owl-carousel").owlCarousel({
+        loop:true,
+        dots: false,
+        autoplay: true,
+        autoplayTimeout: 2000,
+        autoplayHoverPause: true,
+        slideBy: 1,
+        nav: false,
+        responsive:{
+          0:{
+            items:2
+            },
+          425:{
+            items:2
+            },
+          750:{
+            items:3
+            },
+          1024:{
+            items:4
+          }
+        }
+    });
+  });
+</script>
