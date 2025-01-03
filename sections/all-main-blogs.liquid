@@ -16,13 +16,13 @@
   }
 {%- endstyle -%}
 <style>
-  .blog_nav_list{
+  .blog_nav_list {
     display: flex;
     align-items: center;
     gap: 10px;
     margin: 20px 0px;
   }
-  .blog_nav_list .blog_nav_item{
+  .blog_nav_list .blog_nav_item {
     cursor: pointer;
     font-weight: bold;
     margin-right: 20px;
@@ -31,42 +31,42 @@
     letter-spacing: -0.48px;
     color: #1a2024;
   }
-  .blog_nav_list .blog_nav_item.active{
+  .blog_nav_list .blog_nav_item.active {
     background: #000;
     border-radius: 17px;
     background-color: #ecf0f4;
   }
-  .articles{
+  .articles {
     display: none;
   }
-  .articles.active{
+  .articles.active {
     display: block;
   }
-  .blogNav{
+  .blogNav {
     display: flex;
-        align-items: center;
+    align-items: center;
     justify-content: space-between;
   }
-  .view_all_articles a{
+  .view_all_articles a {
     cursor: pointer;
     font-weight: bold;
     margin-right: 20px;
     line-height: 1.17;
     padding: 8px 16px;
     letter-spacing: -0.48px;
-    color: #2F5B96;
+    color: #2f5b96;
     text-decoration: none;
     display: flex;
     align-items: center;
     gap: 4px;
   }
-  @media screen and (max-width: 425px){
-     .blog_nav_list .blog_nav_item{
-    margin-right: 0px;
-  }
-     .blog_nav_list{
-    gap: 0;
-  }
+  @media screen and (max-width: 425px) {
+    .blog_nav_list .blog_nav_item {
+      margin-right: 0px;
+    }
+    .blog_nav_list {
+      gap: 0;
+    }
   }
 </style>
 {%- paginate blog.articles by 6 -%}
@@ -212,69 +212,65 @@
 {% endschema %}
 
 <script>
- document.addEventListener("DOMContentLoaded", function () {
-  async function fetchBlogs() {
-    try {
-      const response = await fetch('https://techydeepak.myshopify.com/admin/api/2024-10/blogs.json', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Shopify-Access-Token': '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',
-        },
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      
-      data.blogs.forEach((blog) => {
-        const blog_nav_list = document.querySelector('.blog_nav_list');
-        const blogLink = `blogs/${blog.handle}`;
-        const blogHandle = blog.handle;
-        const blogItem = document.createElement('span');
-        blogItem.classList.add('blog_nav_item');
-        blogItem.setAttribute("data-handle", blog.handle);
-        blogItem.setAttribute("data-url", blogLink);
-        blogItem.textContent = blog.title;
-        blog_nav_list.appendChild(blogItem);
-      });
-    } catch (error) {
-      console.error('Error fetching blogs:', error);
-    }
-  }
-  fetchBlogs();
-setTimeout(()=>{
-const path = window.location.pathname;
-const param = path.split('/').pop();
-const blogNavList = document.querySelectorAll('.blog_nav_list .blog_nav_item');
-blogNavList.forEach((blogNav) => {
-const dataHandle = blogNav.getAttribute("data-handle");
-if (dataHandle === param) {
-blogNav.classList.add('active');
-}
-
-blogNav.addEventListener("click", () => {
-      const navHandle = blogNav.getAttribute("data-handle");
-      const dataUrl = blogNav.getAttribute("data-url");
-      blogNavList.forEach((navItem) => {
-        if (navItem !== blogNav) {
-          navItem.classList.remove("active");
+  document.addEventListener('DOMContentLoaded', function () {
+    async function fetchBlogs() {
+      try {
+        const response = await fetch('https://techydeepak.myshopify.com/admin/api/2024-10/blogs.json', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Shopify-Access-Token': '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',
+          },
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        const data = await response.json();
+
+        data.blogs.forEach((blog) => {
+          const blog_nav_list = document.querySelector('.blog_nav_list');
+          const blogLink = `blogs/${blog.handle}`;
+          const blogHandle = blog.handle;
+          const blogItem = document.createElement('span');
+          blogItem.classList.add('blog_nav_item');
+          blogItem.setAttribute('data-handle', blog.handle);
+          blogItem.setAttribute('data-url', blogLink);
+          blogItem.textContent = blog.title;
+          blog_nav_list.appendChild(blogItem);
+        });
+      } catch (error) {
+        console.error('Error fetching blogs:', error);
+      }
+    }
+    fetchBlogs();
+    setTimeout(() => {
+      const path = window.location.pathname;
+      const param = path.split('/').pop();
+      const blogNavList = document.querySelectorAll('.blog_nav_list .blog_nav_item');
+      blogNavList.forEach((blogNav) => {
+        const dataHandle = blogNav.getAttribute('data-handle');
+        if (dataHandle === param) {
+          blogNav.classList.add('active');
+        }
+
+        blogNav.addEventListener('click', () => {
+          const navHandle = blogNav.getAttribute('data-handle');
+          const dataUrl = blogNav.getAttribute('data-url');
+          blogNavList.forEach((navItem) => {
+            if (navItem !== blogNav) {
+              navItem.classList.remove('active');
+            }
+          });
+          blogNav.classList.add('active');
+          const newParam = dataUrl.split('/').pop();
+          const pathArray = path.split('/');
+          pathArray[pathArray.length - 1] = newParam;
+          const newPath = pathArray.join('/');
+          const newUrl = `${window.location.origin}${newPath}`;
+          window.location.href = newUrl;
+        });
       });
-      blogNav.classList.add("active");
-  const newParam = dataUrl.split('/').pop();
-  const pathArray = path.split('/');
-  pathArray[pathArray.length - 1] = newParam;
-  const newPath = pathArray.join('/');
-   const newUrl = `${window.location.origin}${newPath}`;
-  window.location.href = newUrl;
-  
-    });
-
-  
-});
-
-}, 1500);
-});
+    }, 1500);
+  });
 </script>
