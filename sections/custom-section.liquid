@@ -1,138 +1,70 @@
-<!-- sections/custom-services.liquid -->
-<div class="custom-services-section">
-  <div class="services-wrapper">
-    {% for block in section.blocks %}
-      <div class="service-box">
-        <div class="service-box-inner">
-          <div class="service-front">
-            <img
-              src="{{ block.settings.image | image_url: width:150, height:200 }}"
-              alt="{{ block.settings.title }}"
-              width=""
-              height=""
-            >
-          </div>
-          <div class="service-back">
-            <h3>{{ block.settings.title }}</h3>
-            <p>{{ block.settings.content }}</p>
-            <a href="{{ block.settings.link }}" class="read-more">Read More</a>
-          </div>
-        </div>
-      </div>
-    {% endfor %}
-  </div>
+<div class="custom-section color-{{ section.settings.color_scheme }}">
+  {% content_for 'blocks' %}
 </div>
+{% comment %}
+  <div>
+    {{ section.settings.my_artist.name }}
+    {{ section.settings.my_material_setting.label }}
+  </div>
 
-<style>
-  .custom-services-section {
-    padding: 40px 0;
-  }
+    {
+      "type": "metaobject",
+      "id": "my_material_setting",
+      "label": "Material",
+      "metaobject_type": "shopify--material"
+    },
+    {
+      "type": "metaobject",
+      "id": "my_artist",
+      "label": "Artist",
+      "metaobject_type": "artist"
+    }
+{% endcomment %}
 
-  .services-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
-  }
-
-  .service-box {
-    width: 30%;
-    height: 300px;
-    perspective: 1000px;
-    margin-bottom: 20px;
-  }
-
-  .service-box-inner {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
-  }
-
-  .service-box:hover .service-box-inner {
-    transform: rotateY(180deg);
-  }
-
-  .service-front, .service-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border: 1px solid #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .service-front img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .service-back {
-    background-color: #f0f0f0;
-    transform: rotateY(180deg);
-    padding: 20px;
-  }
-
-  .service-back h3 {
-    margin-bottom: 15px;
-  }
-
-  .read-more {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-
-  .read-more:hover {
-    background-color: #0056b3;
-  }
-</style>
 {% schema %}
 {
-  "name": "Custom Services Section",
-  "settings": [],
-  "blocks": [
+  "name": "Custom section",
+  "blocks": [{ "type": "@theme" }, { "type": "@app" }],
+  "settings": [
     {
-      "type": "service_box",
-      "name": "Service Box",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Service Image"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Service Title",
-          "default": "Service Title"
-        },
-        {
-          "type": "textarea",
-          "id": "content",
-          "label": "Service Content",
-          "default": "This is a brief description of the service."
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Read More Link"
-        }
-      ]
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
     }
   ],
   "presets": [
     {
-      "name": "Custom Services",
-      "category": "Custom"
+      "name": "Custom section"
+    },
+    {
+      "name": "Heading and text",
+      "blocks": [
+        {
+          "type": "group",
+          "settings": {
+            "color_scheme": "scheme-3"
+          },
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "<h1>Image with text</h1>"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post.</p>"
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

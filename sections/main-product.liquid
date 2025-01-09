@@ -38,7 +38,6 @@
       }
     }
   {%- endstyle -%}
-
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
   {%- if product.quantity_price_breaks_configured? -%}
@@ -76,7 +75,10 @@
   <div class="page-width">
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
-        {% render 'product-media-gallery', variant_images: variant_images %}
+        {% comment %}
+          {% render 'product-media-gallery', variant_images: variant_images %}
+        {% endcomment %}
+        {% render 'custom-media-gallery', variant_images: variant_images %}
       </div>
       <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <section
@@ -104,6 +106,17 @@
                       {{ product.title | escape }}
                     </h2>
                   </a>
+                  <div class="signup_save10">
+                    <h3>signup & save 10%</h3>
+                    <button style="padding: 10px 40px; border-radius: 20px; border: 2px solid aquamarine; background: white;">
+                      <a
+                        data-product-url="{{ product.url }}"
+                        href="/account/register"
+                        style="text-decoration: none; color: black; font-size: 16px;"
+                        >Sign up & Save 10%!</a
+                      >
+                    </button>
+                  </div>
                 </div>
               {%- when 'price' -%}
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
@@ -719,7 +732,14 @@
     </script>
   </div>
 </product-info>
-
+<script type="application/json" id="VariantColorMetaJSON">
+  {
+    {% for variant in product.variants %}
+    {% assign metafield_content =  variant.metafields.custom.color %}
+      "{{- variant.title -}}" : "{{ metafield_content }}" {% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  }
+</script>
 {% schema %}
 {
   "name": "t:sections.main-product.name",

@@ -726,59 +726,71 @@ class SliderComponent extends HTMLElement {
     this.pageTotalElement = this.querySelector('.slider-counter--total');
     this.prevButton = this.querySelector('button[name="previous"]');
     this.nextButton = this.querySelector('button[name="next"]');
+    this.sliderDots = document.querySelector('.slider-dots');
+    // this.sliderThumbnails = document.querySelector('.thumbnail-list');
+    this.myslider = this.querySelector('ul');
+    this.slides = this.myslider.querySelectorAll('li');
+
     if (!this.slider || !this.nextButton) return;
 
     this.initPages();
-    const resizeObserver = new ResizeObserver((entries) => this.initPages());
+    const resizeObserver = new ResizeObserver(() => this.initPages());
     resizeObserver.observe(this.slider);
     this.slider.addEventListener('scroll', this.update.bind(this));
     this.prevButton.addEventListener('click', this.onButtonClick.bind(this));
     this.nextButton.addEventListener('click', this.onButtonClick.bind(this));
-    this.sliderDots = document.querySelector('.slider-dots');
-    this.myslider = document.querySelector('slider-component ul');
-    this.slides = this.myslider.querySelectorAll('li');
     this.addDotEventListeners();
+    // this.addThumbnailEventListeners();
   }
-  addDotEventListeners() {
-      const dots = this.sliderDots.querySelectorAll('.slider-dot');
-      dots.forEach((dot) => {
-        dot.addEventListener('click', this.onDotClick.bind(this));
-      });
-    }
-    onDotClick(event) {
-      event.preventDefault();
-      // const step = event.currentTarget.dataset.step || 1;
-      const step = parseInt(event.currentTarget.dataset.slide, 10) - 1;
-      console.log('step1: ', step);
-      this.slideScrollLeftPosition = step * this.sliderItemOffset;
-      this.setSlideLeftPosition(this.slideScrollLeftPosition);
-      this.slideScrollRightPosition = this.slideScrollLeftPosition - step * this.sliderItemOffset;
-      this.setSlideRightPosition(this.slideScrollRightPosition);
-      this.goToSlide(step);
-    }
 
-  setSlideLeftPosition(position) {
+  addDotEventListeners() {
+    const dots = this.sliderDots.querySelectorAll('.slider-dot');
+    dots.forEach((dot) => {
+      dot.addEventListener('click', this.onDotClick.bind(this));
+    });
+  }
+
+  addThumbnailEventListeners() {
+    const thumbnails = this.sliderThumbnails.querySelectorAll('.thumbnail-list__item');
+    thumbnails.forEach((thumbnail, index) => {
+      thumbnail.addEventListener('click', () => this.goToSlide(index));
+    });
+  }
+
+  onDotClick(event) {
+    event.preventDefault();
+    const step = parseInt(event.currentTarget.dataset.slide, 10) - 1;
+    this.goToSlide(step);
+  }
+
+  goToSlide(index) {
+    if (index < 0 || index >= this.slides.length) return;
+    this.currentSlide = index;
+    const position = index * this.sliderItemOffset;
+    this.setSlidePosition(position);
+    this.updateActiveDot();
+    // this.updateActiveThumbnail();
+  }
+
+  setSlidePosition(position) {
     this.slider.scrollTo({
       left: position,
     });
   }
-   setSlideRightPosition(position) {
-    this.slider.scrollTo({
-      right: position,
+
+  updateActiveDot() {
+    const dots = this.sliderDots.querySelectorAll('.slider-dot');
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === this.currentSlide);
     });
   }
 
-    goToSlide(index) {
-      if (index < 0 || index >= this.slides.length) return;
-      this.currentSlide = index;
-      this.updateActiveDot();
-    }
-    updateActiveDot() {
-      const dots = this.sliderDots.querySelectorAll('.slider-dot');
-      dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === this.currentSlide);
-      });
-    }
+  updateActiveThumbnail() {
+    const thumbnails = this.sliderThumbnails.querySelectorAll('.thumbnail-list__item');
+    thumbnails.forEach((thumbnail, index) => {
+      thumbnail.classList.toggle('active', index === this.currentSlide);
+    });
+  }
 
   initPages() {
     this.sliderItemsToShow = Array.from(this.sliderItems).filter((element) => element.clientWidth > 0);
@@ -791,50 +803,68 @@ class SliderComponent extends HTMLElement {
     this.update();
   }
 
-  resetPages() {
-    this.sliderItems = this.querySelectorAll('[id^="Slide-"]');
-    this.initPages();
-  }
-
   update() {
-    // Temporarily prevents unneeded updates resulting from variant changes
-    // This should be refactored as part of https://github.com/Shopify/dawn/issues/2057
-    if (!this.slider || !this.nextButton) return;
+  if (!this.slider || !this.nextButton) return;
 
-    const previousPage = this.currentPage;
-    this.currentPage = Math.round(this.slider.scrollLeft / this.sliderItemOffset) + 1;
+  const previousPage = this.currentPage;
+  this.currentPage = Math.round(this.slider.scrollLeft / this.sliderItemOffset) + 1;
 
-    if (this.currentPageElement && this.pageTotalElement) {
-      this.currentPageElement.textContent = this.currentPage;
-      this.pageTotalElement.textContent = this.totalPages;
-    }
-
-    if (this.currentPage != previousPage) {
-      this.dispatchEvent(
-        new CustomEvent('slideChanged', {
-          detail: {
-            currentPage: this.currentPage,
-            currentElement: this.sliderItemsToShow[this.currentPage - 1],
-          },
-        })
-      );
-    }
-
-    if (this.enableSliderLooping) return;
-
-    if (this.isSlideVisible(this.sliderItemsToShow[0]) && this.slider.scrollLeft === 0) {
-      this.prevButton.setAttribute('disabled', 'disabled');
-    } else {
-      this.prevButton.removeAttribute('disabled');
-    }
-
-    if (this.isSlideVisible(this.sliderItemsToShow[this.sliderItemsToShow.length - 1])) {
-      this.nextButton.setAttribute('disabled', 'disabled');
-    } else {
-      this.nextButton.removeAttribute('disabled');
-    }
+  if (this.currentPageElement && this.pageTotalElement) {
+    this.currentPageElement.textContent = this.currentPage;
+    this.pageTotalElement.textContent = this.totalPages;
   }
 
+  // Update active dot based on current slide
+  this.updateActiveDot();
+
+  if (this.currentPage !== previousPage) {
+    this.dispatchEvent(
+      new CustomEvent('slideChanged', {
+        detail: {
+          currentPage: this.currentPage,
+          currentElement: this.sliderItemsToShow[this.currentPage - 1],
+        },
+      })
+    );
+  }
+
+  if (this.enableSliderLooping) return;
+
+  if (this.isSlideVisible(this.sliderItemsToShow[0]) && this.slider.scrollLeft === 0) {
+    this.prevButton.setAttribute('disabled', 'disabled');
+  } else {
+    this.prevButton.removeAttribute('disabled');
+  }
+
+  if (this.isSlideVisible(this.sliderItemsToShow[this.sliderItemsToShow.length - 1])) {
+    this.nextButton.setAttribute('disabled', 'disabled');
+  } else {
+    this.nextButton.removeAttribute('disabled');
+  }
+}
+
+  updateActiveDot() {
+  const dots = this.sliderDots.querySelectorAll('.slider-dot');
+  const scrollPosition = this.slider.scrollLeft;
+
+  let closestIndex = 0;
+  let closestDistance = Infinity;
+
+  // Find the closest slide to the current scroll position
+  this.sliderItemsToShow.forEach((slide, index) => {
+    const distance = Math.abs(slide.offsetLeft - scrollPosition);
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closestIndex = index;
+    }
+  });
+
+  // Update the active dot based on the closest slide
+  dots.forEach((dot, index) => {
+    dot.classList.toggle('active', index === closestIndex);
+  });
+}
+  
   isSlideVisible(element, offset = 0) {
     const lastVisibleSlide = this.slider.clientWidth + this.slider.scrollLeft - offset;
     return element.offsetLeft + element.clientWidth <= lastVisibleSlide && element.offsetLeft >= this.slider.scrollLeft;
@@ -848,12 +878,6 @@ class SliderComponent extends HTMLElement {
         ? this.slider.scrollLeft + step * this.sliderItemOffset
         : this.slider.scrollLeft - step * this.sliderItemOffset;
     this.setSlidePosition(this.slideScrollPosition);
-  }
-
-  setSlidePosition(position) {
-    this.slider.scrollTo({
-      left: position,
-    });
   }
 }
 

@@ -1,0 +1,153 @@
+{% if product.metafields.custom.how_it_works.value %}
+  <style>
+      .how-it-works {
+         background-color: #fdb5c6;
+         text-align: center;
+         padding: 20px;
+         border-radius: 8px;
+         margin: 20px 0;
+        display: flex;
+        justify-content: center;
+         color: #ffffff;
+       }
+
+       .how-it-works h2 {
+         font-size: 24px;
+         color: #ffffff;
+         font-weight: bold;
+         /* width: 10%; */
+         margin: 0;
+         margin-right: 20px;
+         /* margin-bottom: 20px; */
+       }
+
+       .steps-container {
+         display: flex;
+         justify-content: center;
+         gap: 20px;
+         flex-wrap: wrap;
+       }
+       .steps-container .custom-content {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+       }
+       .steps-container .custom-content .content h3 {
+         margin: 0;
+        text-align: left;
+         font-weight: bold;
+         color: #ffffff;
+       }
+      .steps-container .custom-content .content p {
+         margin: 0;
+        text-align: left;
+        font-size: 12px;
+       }
+       .steps-container .custom-content .content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 150px;
+        line-height: 1.4;
+       }
+       .step-image {
+         width: 80px;
+         height: 80px;
+         border-radius: 50%;
+         margin-bottom: 10px;
+         object-fit: cover;
+         border: 3px solid #fff;
+       }
+      @media screen and (min-width: 1000px){
+       .how-it-works h2 {
+         width: 10%;
+       }
+        .steps-container {
+
+         width: 90%;
+       }
+        .steps-container .custom-content {
+         width: 30%;
+       }
+      }
+      @media screen and (max-width: 1024px){
+       .steps-container .custom-content .content{
+         width: 150px;
+       }
+      }
+      @media screen and (max-width: 999px){
+        .how-it-works {
+        flex-direction: column;
+          padding: 10px;
+        }
+         .how-it-works h2 {
+         margin-bottom: 10px;
+       }
+      }
+      @media screen and (max-width: 768px){
+        .step-image {
+         width: 75px;
+         height: 75px;
+         }
+      .steps-container {
+        flex-direction: column;
+        align-items: center;
+    }
+      }
+      @media screen and (max-width: 368px){
+         .step-image {
+         width: 70px;
+         height: 70px;
+         }
+        .steps-container .custom-content {
+       flex-wrap: wrap;
+      justify-content: center;
+          gap: 3px;
+       }
+      }
+  </style>
+  <div class="page-width">
+    <div class="how-it-works">
+      <h2>{{ section.settings.title }}</h2>
+      <div class="steps-container">
+        {% for prodMeta in product.metafields.custom.how_it_works.value %}
+          {% if prodMeta %}
+            <div class="custom-content">
+              <div class="image">
+                <img
+                  src="{{ prodMeta.image | image_url }}"
+                  alt="{{ prodMeta.heading }}"
+                  width=""
+                  height=""
+                  class="step-image"
+                >
+              </div>
+              <div class="content">
+                <h3>{{ prodMeta.heading }}</h3>
+                <p>{{ prodMeta.description }}</p>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% schema %}
+{
+  "name": "How it works",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "How it works"
+    }
+  ],
+  "presets": [
+    {
+      "name": "How it works"
+    }
+  ]
+}
+{% endschema %}

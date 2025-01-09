@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "password_page": {
@@ -54,8 +63,7 @@
       "of": "из",
       "next_slide": "Листать вперед",
       "previous_slide": "Листать назад",
-      "name": "Ползунок",
-      "slide_number": "TODO"
+      "name": "Ползунок"
     }
   },
   "newsletter": {
@@ -224,10 +232,6 @@
     }
   },
   "templates": {
-    "404": {
-      "title": "Страница не найдена",
-      "subtext": "404"
-    },
     "search": {
       "no_results": "По запросу «{{ terms }}» ничего не найдено. Проверьте правописание или выберите другие слова либо фразу.",
       "title": "Результаты поиска",
@@ -281,6 +285,10 @@
         "error_heading": "Измените следующие элементы:",
         "title": "Форма для связи"
       }
+    },
+    "404": {
+      "title": "Страница не найдена",
+      "subtext": "404"
     }
   },
   "sections": {

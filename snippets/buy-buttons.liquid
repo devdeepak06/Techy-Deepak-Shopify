@@ -23,7 +23,9 @@
         assign show_dynamic_checkout = true
       endif
     -%}
-
+    {% for collection in product.collections %}
+      {% assign collection_title = collection.title %}
+    {% endfor %}
     <product-form
       class="product-form"
       data-hide-errors="{{ gift_card_recipient_feature_active }}"
@@ -57,11 +59,16 @@
           value="{{ product.selected_or_first_available_variant.id }}"
           {% if product.selected_or_first_available_variant.available == false
             or quantity_rule_soldout
-            or product.selected_or_first_available_variant == nil
+            or product.selected_or_first_available_variant == null
           %}
             disabled
           {% endif %}
           class="product-variant-id"
+        >
+        <input
+          type="hidden"
+          name="properties[Collection]"
+          value="{{ collection_title }}"
         >
 
         {%- if gift_card_recipient_feature_active -%}
@@ -85,13 +92,13 @@
             class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
-              or product.selected_or_first_available_variant == nil
+              or product.selected_or_first_available_variant == null
             %}
               disabled
             {% endif %}
           >
             <span>
-              {%- if product.selected_or_first_available_variant == nil -%}
+              {%- if product.selected_or_first_available_variant == null -%}
                 {{ 'products.product.unavailable' | t }}
               {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
                 {{ 'products.product.sold_out' | t }}

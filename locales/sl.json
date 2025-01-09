@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "password_page": {
@@ -54,8 +63,7 @@
       "of": "od",
       "next_slide": "Podrsajte desno",
       "previous_slide": "Podrsajte levo",
-      "name": "Drsnik",
-      "slide_number": "TODO"
+      "name": "Drsnik"
     }
   },
   "newsletter": {
@@ -224,10 +232,6 @@
     }
   },
   "templates": {
-    "404": {
-      "title": "Strani ni mogoče najti",
-      "subtext": "404"
-    },
     "search": {
       "no_results": "Za »{{ terms }}« ni bil najden noben rezultat. Preverite črkovanje ali uporabite drugo besedo ali frazo.",
       "page": "Stran",
@@ -281,6 +285,10 @@
         "error_heading": "Prilagodite naslednje:",
         "title": "Obrazec za stik"
       }
+    },
+    "404": {
+      "title": "Strani ni mogoče najti",
+      "subtext": "404"
     }
   },
   "sections": {

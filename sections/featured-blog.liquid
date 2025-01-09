@@ -197,6 +197,38 @@
     {%- endif -%}
   </div>
 </div>
+<style>
+     .slider {
+     position: relative;
+     width: 100%;
+     overflow: hidden;
+   }
+  .slider-dots {
+       display: flex;
+       justify-content: center;
+       gap: 8px;
+     text-align: center;
+     margin-top: 10px;
+   }
+
+   .slider-dot {
+     cursor: pointer;
+     background-color: gray;
+     border: none;
+     border-radius: 50%;
+     width: 10px;
+     height: 10px;
+     margin: 0 5px;
+       background-color: #ffffff;
+       border: .5px solid #FF9800;
+       cursor: pointer;
+   }
+
+   .slider-dot.active {
+     background-color: blue;
+     background-color: #FF9800;
+     transition: background-color .1s linear .2s;
+</style>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.slider-dot').forEach((dot) => {
@@ -210,30 +242,6 @@
     });
   });
 </script>
-<style>
-  .slider-dots{display:none;}
-  @media only screen and (max-width: 600px){
-     .slider-dots {
-         display: flex;
-         justify-content: center;
-         gap: 8px;
-       }
-
-       .slider-dot {
-         width: 15px;
-        height: 15px;
-        border-radius: 50%;
-        background-color: #ffffff;
-        border: .5px solid #FF9800;
-        cursor: pointer;
-    }
-
-       .slider-dot.active {
-       background-color: #FF9800;
-       transition: background-color .1s linear .2s;
-     }
-  }
-</style>
 {% schema %}
 {
   "name": "t:sections.featured-blog.name",

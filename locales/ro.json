@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "password_page": {
@@ -54,8 +63,7 @@
       "of": "din",
       "next_slide": "Glisare la dreapta",
       "previous_slide": "Glisare la stânga",
-      "name": "Glisor",
-      "slide_number": "TODO"
+      "name": "Glisor"
     }
   },
   "newsletter": {
@@ -220,10 +228,6 @@
     }
   },
   "templates": {
-    "404": {
-      "title": "Pagina nu a fost găsită",
-      "subtext": "404"
-    },
     "search": {
       "no_results": "Nu s-au găsit rezultate pentru „{{ terms }}”. Verificați ortografia sau utilizați alt cuvânt sau altă expresie.",
       "title": "Rezultatele căutării",
@@ -272,6 +276,10 @@
         "error_heading": "Vă rugăm să ajustați următoarele:",
         "title": "Formular de contact"
       }
+    },
+    "404": {
+      "title": "Pagina nu a fost găsită",
+      "subtext": "404"
     }
   },
   "sections": {

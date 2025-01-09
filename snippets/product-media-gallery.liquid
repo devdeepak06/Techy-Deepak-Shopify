@@ -11,44 +11,79 @@
   {% render 'product-media-gallery' %}
 {% endcomment %}
 <style>
-     .slider {
-     position: relative;
-     width: 100%; /* Adjust based on your layout */
-     overflow: hidden; /* Hide overflow */
-   }
-
-   .slideshow__slide {
-     display: none; /* Hide all slides by default */
-   }
-
-   .slideshow__slide.active {
-     display: block; /* Show the active slide */
-   }
+    .slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
   .slider-dots {
-       display: flex;
-       justify-content: center;
-       gap: 8px;
-     text-align: center; /* Center the dots */
-     margin-top: 10px; /* Add spacing above dots */
-   }
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    text-align: center;
+    margin: 10px;
+  }
 
-   .slider-dot {
-     cursor: pointer;
-     background-color: gray; /* Default dot color */
-     border: none;
-     border-radius: 50%;
-     width: 10px;
-     height: 10px;
-     margin: 0 5px;
-       background-color: #ffffff;
-       border: .5px solid #FF9800;
-       cursor: pointer;
-   }
+  .slider-dot {
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    margin: 0 2px;
+    background-color: #ffffff;
+    border: 0.05px solid #ffc877;
+    cursor: pointer;
+  }
 
-   .slider-dot.active {
-     background-color: blue;
-     background-color: #FF9800;
-     transition: background-color .1s linear .2s;
+  .slider-dot.active {
+    background-color: blue;
+    background-color: #ff9800;
+    transition: background-color 0.05s linear 0.05s;
+  }
+
+  .grid--peek.slider--mobile {
+    margin: 0;
+    width: 100%;
+  }
+  .slider.slider--mobile {
+    position: relative;
+    flex-wrap: inherit;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scroll-padding-left: 1.5rem;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+  }
+  @media screen and (min-width: 750px) {
+    .grid--1-col .grid__item {
+      max-width: 100%;
+      width: 100%;
+    }
+    .product__media-item {
+      display: flex !important;
+      align-items: center;
+    }
+    .slider--mobile + .slider-buttons {
+      display: flex !important;
+      justify-content: space-between;
+      position: absolute;
+      top: 45%;
+      width: 100%;
+    }
+    .slider-counter {
+      display: none !important;
+    }
+    .product--thumbnail_slider .slider-mobile-gutter .slider-button {
+      z-index: 9999;
+      position: relative;
+    }
+    .product--thumbnail_slider .slider-mobile-gutter .slider-button--prev {
+      left: -43px;
+    }
+    .product--thumbnail_slider .slider-mobile-gutter .slider-button--next {
+      right: -43px;
+    }
+  }
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -177,6 +212,7 @@
         {%- endunless -%}
       {%- endfor -%}
     </ul>
+
     <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}">
       <button
         type="button"
@@ -242,7 +278,7 @@
   -%}
     <slider-component
       id="GalleryThumbnails-{{ section.id }}"
-      class="thumbnail-slider slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}"
+      class="thumbnail-slider slider-mobile-gutter quick-add-hidden {% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}"
     >
       <button
         type="button"

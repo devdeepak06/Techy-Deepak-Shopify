@@ -100,6 +100,50 @@ class CartItems extends HTMLElement {
               targetElement.replaceWith(sourceElement);
             }
           }
+          function getCartDataAndUpdateButtons() {
+            $.ajax({
+              url: '/cart.js',
+              method: 'GET',
+              dataType: 'json',
+              success: function (data) {
+                const { items: itemsInCart, total_price } = data;
+                const totalPrice = total_price / 100;
+                const gridVisibility = {
+                  gridTwo: document.querySelector('.grid_two_products'),
+                  gridFour: document.querySelector('.grid_four_products')
+                };
+                if (gridVisibility.gridTwo && gridVisibility.gridFour) {
+                  gridVisibility.gridTwo.style.display = (totalPrice >= 499 && totalPrice <= 2000) ? 'block' : 'none';
+                  gridVisibility.gridFour.style.display = (totalPrice > 2000 && totalPrice <= 5000) ? 'block' : 'none';
+                }
+                function updateButtonState(productListItems, priceRange) {
+                  productListItems.forEach((listItem) => {
+                    const addToCartButton = listItem.querySelector('form .quick-add__submit');
+                    const productId = listItem.querySelector('form input[name="product-id"]')?.value;
+
+                    if (productId && addToCartButton) {
+                      const cartItem = itemsInCart.find((item) => item.product_id == productId);
+                      addToCartButton.disabled = (priceRange && cartItem) || !priceRange;
+                    }
+                  });
+                }
+                updateButtonState(
+                  document.querySelectorAll('.grid_two_products ul li'),
+                  totalPrice >= 499 && totalPrice <= 2000
+                );
+                updateButtonState(
+                  document.querySelectorAll('.grid_four_products ul li'),
+                  totalPrice > 2000 && totalPrice <= 5000
+                );
+              },
+              error: function (xhr, status, error) {
+                console.error('Error fetching cart data:', error);
+              }
+            });
+          }
+
+          getCartDataAndUpdateButtons();
+
         })
         .catch((e) => {
           console.error(e);
@@ -111,6 +155,7 @@ class CartItems extends HTMLElement {
           const html = new DOMParser().parseFromString(responseText, 'text/html');
           const sourceQty = html.querySelector('cart-items');
           this.innerHTML = sourceQty.innerHTML;
+          console.log('else update')
         })
         .catch((e) => {
           console.error(e);
@@ -216,6 +261,56 @@ class CartItems extends HTMLElement {
       })
       .finally(() => {
         this.disableLoading(line);
+        function getCartDataAndUpdateButtons() {
+  $.ajax({
+      url: '/cart.js',
+      method: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        const { items: itemsInCart, total_price } = data;
+        const totalPrice = total_price / 100;
+        let gridItemCount = 0;
+        const grid_product_ids = [8770597257437, 8770596995293, 8770596602077, 8770597355741];
+        itemsInCart.forEach((item) => {
+          if (grid_product_ids.includes(item.product_id)) {
+            gridItemCount += item.quantity;
+            }
+          });
+
+        console.log(gridItemCount, 'gridItemCount');
+        // Update button states for both grids
+        updateButtonState(document.querySelectorAll('.grid_two_products ul li'), 'gridTwo', gridItemCount, totalPrice);
+        updateButtonState(document.querySelectorAll('.grid_four_products ul li'), 'gridFour', gridItemCount, totalPrice);
+        },
+    error: function (xhr, status, error) {
+      console.error('Error fetching cart data:', error);
+      }
+    });
+     }
+
+     function updateButtonState(productListItems, gridType, gridItemCount, totalPrice) {
+       productListItems.forEach((listItem) => {
+        // console.log(gridItemCount, 'gridItemCount')
+         const addToCartButton = listItem.querySelector('.product_grid form .quick-add__submit');
+         if (addToCartButton) {
+           addToCartButton.disabled = false;
+         // Conditions for disabling the button
+      const isGridTwoLimitReached = gridType === 'gridTwo' && gridItemCount >= 1;
+      const isGridFourLimitReached = gridType === 'gridFour' && gridItemCount >= 2;
+
+      const isWithin499To2000 = totalPrice >= 499 && totalPrice <= 2000;
+      const isWithin2000To5000 = totalPrice >= 2000 && totalPrice <= 5000;
+
+      if ((isWithin499To2000 && (isGridTwoLimitReached || isGridFourLimitReached)) ||
+          (isWithin2000To5000 && (isGridTwoLimitReached || isGridFourLimitReached))) {
+        addToCartButton.disabled = true;
+      }
+           }
+         });
+       }
+
+     getCartDataAndUpdateButtons();
+
       });
   }
 

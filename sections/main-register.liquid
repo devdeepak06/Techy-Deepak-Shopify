@@ -140,7 +140,65 @@
     </button>
   {%- endform -%}
 </div>
+<script>
+ document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById('create_customer');
+    const prodUrl = document.querySelector('.signup_save10 a').getAttribute('data-prouct-url');
+   if(prodUrl){
+     console.log(prodUrl, 'prodUrl')
+   }
+   let existingCustomer= {};
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        
+        const firstName = form.elements['customer[first_name]'].value;
+        const lastName = form.elements['customer[last_name]'].value;
+        const email = form.elements['customer[email]'].value;
 
+        // Set existingCustomers array with form values
+        existingCustomer = { firstName, lastName, email };
+
+        main();
+    });
+        console.log(existingCustomer);
+
+    const API_URL = 'http://localhost:3000/api/customers';
+
+    async function fetchCustomers() {
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) throw new Error(`Failed to fetch customers. Status: ${response.status}`);
+            return (await response.json()).data;
+        } catch (error) {
+            console.error('Error fetching customers:', error.message);
+            throw error;
+        }
+    }
+
+    function compareCustomers(apiCustomers, existingCustomer) {
+            if (!apiCustomers.some(apiCustomer => 
+                apiCustomer.lastName === existingCustomer.lastName &&
+                apiCustomer.firstName === existingCustomer.firstName &&
+                apiCustomer.email === existingCustomer.email
+            )) {
+                console.log('Not matched:', existingCustomer);
+            }else{ 
+      console.log('Matched:', existingCustomer);
+            }
+    }
+
+    async function main() {
+        try {
+            const apiCustomers = await fetchCustomers();
+            compareCustomers(apiCustomers, existingCustomer);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
+
+    // main();
+});
+</script>
 {% schema %}
 {
   "name": "t:sections.main-register.name",

@@ -1,0 +1,42 @@
+{% for block in section.blocks %}
+  <div>{{ block.settings.text }}</div>
+  <div>{{ block.settings.author.name }}</div>
+{% endfor %}
+{% schema %}
+{
+  "name": "Test section",
+  "settings": [],
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+      {
+        "type": "text",
+        "label": "text",
+        "id": "text",
+        "default": "Welcome to the store"
+      },
+        {
+          "type": "metaobject",
+          "id": "author",
+          "label": "Author",
+          "metaobject_type": "author"
+        },
+        {
+          "type": "metaobject",
+          "id": "artist",
+          "label": "Artist",
+          "metaobject_type": "gaurav"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Test section"
+    }
+  ]
+}
+{% endschema %}

@@ -12,9 +12,39 @@
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
 <style>
-  .drawer {
-    visibility: hidden;
+       .drawer {
+         visibility: hidden;
+       }
+       .is-cart-empty{
+         display: none;
+       }
+       /* .grid_two_products, .grid_four_products{
+         display: none;
+
+       } */
+       .grid_two_products ul, .grid_four_products ul{
+         display: flex;
+         gap: 10px;
+         list-style-type: none;
+         padding: 0 20px;
+       }
+       .grid_two_products ul li{
+         width: 50%;
+       }
+      .grid_four_products ul{
+        overflow-x: auto;
+      }
+      .grid_four_products ul::-webkit-scrollbar {
+        height: 3px;
+    }
+    .grid_four_products ul::-webkit-scrollbar-thumb {
+      background-color: rgba(var(--color-foreground),.7);
+      border-radius: 100px;
   }
+      .grid_four_products ul li .card__inner{
+        width: 150px;
+        height: 200px;
+      }
 </style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
@@ -447,7 +477,50 @@
           </div>
           <div id="CartDrawer-CartErrors" role="alert"></div>
         </form>
-        {% render 'optional-delivery' %}
+        {% comment %}
+          {% render 'optional-delivery' %}
+        {% endcomment %}
+        <div
+          class="{% if cart == empty %}is-cart-empty{% endif %} free_product_grid"
+        >
+          {% assign product_limit = 0 %}
+          {% assign heading_text = '' %}
+          {% assign product_grid_class = '' %}
+          {% if cart.total_price >= 49900 and cart.total_price <= 200000 %}
+            {% assign product_limit = 2 %}
+            {% assign product_grid_class = 'grid_two_products' %}
+            {% assign heading_text = 'Add 1 product from the below' %}
+          {% elsif cart.total_price > 200000 and cart.total_price <= 500000 %}
+            {% assign product_limit = 4 %}
+            {% assign product_grid_class = 'grid_four_products' %}
+            {% assign heading_text = 'Add 2 products from the below' %}
+          {% endif %}
+
+          {% if product_limit > 0 %}
+            <div class="{{ product_grid_class }} product_grid">
+              <p class="gridHeading">{{ heading_text }}</p>
+              <ul>
+                {% for product in collections.bath.products limit: product_limit %}
+                  {% if product %}
+                    <li>
+                      {% render 'card-product',
+                        card_product: product,
+                        media_aspect_ratio: section.settings.image_ratio,
+                        image_shape: section.settings.image_shape,
+                        show_secondary_image: section.settings.show_secondary_image,
+                        show_vendor: section.settings.show_vendor,
+                        show_rating: section.settings.show_rating,
+                        skip_styles: skip_card_product_styles,
+                        section_id: section.id,
+                        quick_add: 'standard'
+                      %}
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        </div>
       </cart-drawer-items>
       <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
@@ -537,7 +610,6 @@
         </div>
 
         <!-- CTAs -->
-
         <div class="cart__ctas" {{ block.shopify_attributes }}>
           <button
             type="submit"
@@ -545,7 +617,7 @@
             class="cart__checkout-button button"
             name="checkout"
             form="CartDrawer-Form"
-            {% if cart == empty %}
+            {% if cart == empty or cart.total_price <= 69900 %}
               disabled
             {% endif %}
           >
@@ -556,3 +628,65 @@
     </div>
   </div>
 </cart-drawer>
+<style>
+  .button_disabled{
+   opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+</style>
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+     function getCartDataAndUpdateButtons() {
+  $.ajax({
+      url: '/cart.js',
+      method: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        const { items: itemsInCart, total_price } = data;
+        const totalPrice = total_price / 100;
+        let gridTwoCount = 0;
+        let gridFourCount = 0;
+        let gridItemCount = 0;
+        const grid_product_ids = [8770597257437, 8770596995293, 8770596602077, 8770597355741];
+        itemsInCart.forEach((item) => {
+          if (grid_product_ids.includes(item.product_id)) {
+            gridItemCount += item.quantity;
+            }
+          });
+
+        // console.log(gridItemCount, 'gridItemCount');
+        // Update button states for both grids
+        updateButtonState(document.querySelectorAll('.grid_two_products ul li'), 'gridTwo', gridItemCount, totalPrice);
+        updateButtonState(document.querySelectorAll('.grid_four_products ul li'), 'gridFour', gridItemCount, totalPrice);
+        },
+    error: function (xhr, status, error) {
+      console.error('Error fetching cart data:', error);
+      }
+    });
+     }
+
+     function updateButtonState(productListItems, gridType, gridItemCount, totalPrice) {
+       productListItems.forEach((listItem) => {
+        // console.log(gridItemCount, 'gridItemCount')
+         const addToCartButton = listItem.querySelector('.product_grid form .quick-add__submit');
+         if (addToCartButton) {
+           addToCartButton.disabled = false;
+         // Conditions for disabling the button
+      const isGridTwoLimitReached = gridType === 'gridTwo' && gridItemCount >= 1;
+      const isGridFourLimitReached = gridType === 'gridFour' && gridItemCount >= 2;
+
+      const isWithin499To2000 = totalPrice >= 499 && totalPrice <= 2000;
+      const isWithin2000To5000 = totalPrice >= 2000 && totalPrice <= 5000;
+
+      if ((isWithin499To2000 && (isGridTwoLimitReached || isGridFourLimitReached)) ||
+          (isWithin2000To5000 && (isGridTwoLimitReached || isGridFourLimitReached))) {
+        addToCartButton.disabled = true;
+      }
+           }
+         });
+       }
+
+     getCartDataAndUpdateButtons();
+     });
+</script>
